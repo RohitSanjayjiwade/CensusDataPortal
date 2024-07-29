@@ -2,6 +2,34 @@
   @tailwind components;
   @tailwind utilities;
 
+
+/*.chat-window::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-window {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}*/
+
+.chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+/*.chat-window::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}*/
+
+.chat-window::-webkit-scrollbar-thumb {
+  background: #e6e6e6;
+  border-radius: 10px;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
   @layer base {
     :root {
       --background: 0 0% 100%;

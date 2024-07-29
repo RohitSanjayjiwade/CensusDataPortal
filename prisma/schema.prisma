@@ -1,0 +1,240 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+// Define the Data model
+model Data {
+  id                        Int       @id @default(autoincrement())
+  stateCode                 String    @unique
+  districtCode              String
+  subDistrictCode           String
+  townVillageCode           String
+  wardCode                  String
+  enumerationBlockCode      String
+  levelOfAdminUnit          String
+  areaName                  String
+  totalRuralUrban           String
+  noOfHousehold             Int?
+
+  totalPopulationPersons    Int?
+  totalPopulationMales      Int?
+  totalPopulationFemales    Int?
+
+  populationInAgePersons    Int?
+  populationInAgeMales      Int?
+  populationInAgeFemales    Int?
+
+  castePopulationPersons    Int?
+  castePopulationMales      Int?
+  castePopulationFemales    Int?
+
+  tribePopulationPersons    Int?
+  tribePopulationMales      Int?
+  tribePopulationFemales    Int?
+
+  literatesPersons          Int?
+  literatesMales            Int?
+  literatesFemales          Int?
+
+  illiteratesPersons        Int?
+  illiteratesMales          Int?
+  illiteratesFemales        Int?
+
+  totalWorkersPersons       Int?
+  totalWorkersMales         Int?
+  totalWorkersFemales       Int?
+
+  mainWorkersPersons        Int?
+  mainWorkersMales          Int?
+  mainWorkersFemales        Int?
+
+  workersCultiPersons       Int?
+  workersCultiMales         Int?
+  workersCultiFemales       Int?
+
+  mainWorkersAgriLabourersPersons          Int?
+  mainWorkersAgriLabourersMales            Int?
+  mainWorkersAgriLabourersFemales          Int?
+
+  mainWorkersHouseholdIndustriesPersons    Int?
+  mainWorkersHouseholdIndustriesMales      Int?
+  mainWorkersHouseholdIndustriesFemales    Int?
+
+  mainWorkersOtherWorkersPersons           Int?
+  mainWorkersOtherWorkersMales             Int?
+  mainWorkersOtherWorkersFemales           Int?
+
+  marginalWorkersPersons                   Int?
+  marginalWorkersMales                     Int?
+  marginalWorkersFemales                   Int?
+
+  marginalCultivatorsPersons               Int?
+  marginalCultivatorsMales                 Int?
+  marginalCultivatorsFemales               Int?
+
+  marginalAgriLabourersPersons             Int?
+  marginalAgriLabourersMales               Int?
+  marginalAgriLabourersFemales             Int?
+
+  marginalWorkersHouseholdIndustriesPersons       Int?
+  marginalWorkersHouseholdIndustriesMales         Int?
+  marginalWorkersHouseholdIndustriesFemales       Int?
+
+  marginalWorkersOtherWorkersPersons        Int?
+  marginalWorkersOtherWorkersMales          Int?
+  marginalWorkersOtherWorkersFemales        Int?
+
+  marginalWorkers3To6MonthsPersons          Int?
+  marginalWorkers3To6MonthsMales            Int?
+  marginalWorkers3To6MonthsFemales          Int?
+
+  marginalCultivatorsPersons3To6Months     Int?
+  marginalCultivatorsMales3To6Months       Int?
+  marginalCultivatorsFemales3To6Months     Int?
+
+  marginalAgriLabourersPersons3To6Months   Int?
+  marginalAgriLabourersMales3To6Months     Int?
+  marginalAgriLabourersFemales3To6Months   Int?
+
+  marginalWorkersHouseholdIndustriesPersons3To6Months     Int?
+  marginalWorkersHouseholdIndustriesMales3To6Months       Int?
+  marginalWorkersHouseholdIndustriesFemales3To6Months     Int?
+
+  marginalOtherWorkersPersons3To6Months     Int?
+  marginalOtherWorkersMales3To6Months       Int?
+  marginalOtherWorkersFemales3To6Months     Int?
+
+  marginalWorkersLessThan3MonthsPersons      Int?
+  marginalWorkersLessThan3MonthsMales        Int?
+  marginalWorkersLessThan3MonthsFemales      Int?
+
+  marginalCultivatorsPersonsLessThan3Months  Int?
+  marginalCultivatorsMalesLessThan3Months    Int?
+  marginalCultivatorsFemalesLessThan3Months  Int?
+
+  marginalAgriLabourersPersonsLessThan3Months  Int?
+  marginalAgriLabourersMalesLessThan3Months    Int?
+  marginalAgriLabourersFemalesLessThan3Months  Int?
+
+  marginalWorkersHouseholdIndustriesPersonsLessThan3Months    Int?
+  marginalWorkersHouseholdIndustriesMalesLessThan3Months      Int?
+  marginalWorkersHouseholdIndustriesFemalesLessThan3Months    Int?
+
+  marginalOtherWorkersPersonsLessThan3Months    Int?
+  marginalOtherWorkersMalesLessThan3Months      Int?
+  marginalOtherWorkersFemalesLessThan3Months    Int?
+
+  nonWorkersPersons        Int?
+  nonWorkersMales          Int?
+  nonWorkersFemales        Int?
+
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  // Define unique relation names for Year model
+  years                     Year[]    @relation("DataYear") // Specify a unique name
+  rural_years               Year[]    @relation("RuralDataYear") // Specify another unique name
+  urban_years               Year[]    @relation("UrbanDataYear") // Specify another unique name
+}
+
+// Define the State model
+model State {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  stateCode   String    @unique
+  slug        String    @unique
+  cities      City[]    // Opposite relation field for City
+
+  // Add opposite relations for Year, District, and Village
+  years       Year[]
+  districts   District[]
+  villages    Village[]
+}
+
+// Define the District model
+model District {
+  id           Int      @id @default(autoincrement())
+  name         String
+  state        State    @relation(fields: [stateId], references: [id])
+  stateId      Int
+  districtCode String   @unique
+  slug         String   @unique
+  cities       City[]   // Opposite relation field for City
+  villages     Village[] // Opposite relation field for Village
+  years       Year[]
+}
+
+// Define the City model
+model City {
+  id          Int       @id @default(autoincrement())
+  name        String
+  cityCode    String    @unique
+  state       State     @relation(fields: [stateId], references: [id])
+  stateId     Int
+  district    District  @relation(fields: [districtId], references: [id])
+  districtId  Int
+  slug        String    @unique
+  villages    Village[] // Opposite relation field for Village
+  years       Year[]    // Opposite relation field for Year
+}
+
+// Define the Village model
+model Village {
+  id              Int       @id @default(autoincrement())
+  name            String
+  villageCode     String    @unique
+  state           State     @relation(fields: [stateId], references: [id])
+  stateId         Int
+  district        District  @relation(fields: [districtId], references: [id])
+  districtId      Int
+  city            City      @relation(fields: [cityId], references: [id])
+  cityId          Int
+  slug            String    @unique
+  years           Year[]    // Opposite relation field for Year
+  pincode         String?
+  villageType     String?
+  deliveryStatus  String?
+  divisionName    String?
+  regionName      String?
+  circleName      String?
+  telephone       String?
+  relatedSuboffice String?
+  relatedHeadoffice String?
+}
+
+
+// Define the Year model in Prisma
+model Year {
+  id           Int       @id @default(autoincrement())
+  year         Int
+  state        State?    @relation(fields: [stateId], references: [id])
+  stateId      Int?
+  district     District? @relation(fields: [districtId], references: [id])
+  districtId   Int?
+  city         City?     @relation(fields: [cityId], references: [id])
+  cityId       Int?
+  village      Village?  @relation(fields: [villageId], references: [id])
+  villageId    Int?
+  
+  // Relationships with Data model
+  data         Data?     @relation("DataYear", fields: [dataId], references: [id])
+  rural_data   Data?     @relation("RuralDataYear", fields: [ruralDataId], references: [id])
+  urban_data   Data?     @relation("UrbanDataYear", fields: [urbanDataId], references: [id])
+  
+  // Foreign keys
+  dataId       Int?
+  ruralDataId  Int?
+  urbanDataId  Int?
+}

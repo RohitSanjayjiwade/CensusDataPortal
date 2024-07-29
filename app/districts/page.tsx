@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import {
 	Table,
 	TableBody,
@@ -9,49 +7,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
-import slugify from 'slugify';
-import UsersTable from '@/components/UsersTable';
 
-export default function StateList() {
-
-	const states = [
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 },
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 },
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 },
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 },
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 },
-		{ name: "MH", id: 1 },
-		{ name: "MP", id: 2 },
-		{ name: "JK", id: 3 }
-	];
-
-	// // Function to generate slug from state name
-	// const generateSlug = (text: string) => {
-	// 	return slugify(text, { lower: true, remove: /[*+~.()'"!:@]/g });
-	// };
-
-	// // Add slug to each state object
-	// const statesWithSlugs = states.map((state) => ({
-	// 	...state,
-	// 	slug: generateSlug(state.name),
-	// }));
-
-	if (states.length === 0) {
-		return <h1 className="text-red">Not Found</h1>;
-	}
-
+export default function Districts(){
 	return (
-		<div className="flex-1 mt-32 overflow-hidden">
+		<div className="mt-5 w-full">
 			
 			<Table>
 				<TableCaption>A list of States.</TableCaption>
@@ -80,8 +39,8 @@ export default function StateList() {
 				</TableBody>
 			</Table>
 
-			{/*<UsersTable />*/}
+			<UsersTable />
 
 		</div>
-	);
+		);
 }

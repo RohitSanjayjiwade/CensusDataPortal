@@ -1,7 +1,5 @@
 "use client";
 
-
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,12 +15,12 @@ const links: linkProps[] = [
 	{ name: "Cities", href: "/cities" },
 	{ name: "Towns", href: "/towns" }
 ];
-// className="absolute left-4 top-4 object-contain md:left-10 md:top-6 "
+
 export default function Navbar() {
 	const pathName = usePathname();
 	return (
-		<header className="bg-violet-500 w-full shadow-lg shadow-indigo-400/40 max-w-full">
-		<nav className="items-center max-w-7xl mx-auto justify-between px-5 sm:px-6 py-5 lg:px-8 flex">
+		<header className="bg-violet-500 w-full sticky top-0 shadow-lg z-30 shadow-indigo-400/40 max-w-full">
+		<nav className="items-center max-w-7xl mx-auto max-lg:justify-center justify-between px-5 sm:px-6 py-5 lg:px-8 flex">
 			<div className="flex items-center text-xl text-white">
 				<Link href="/">Population Census</Link>
 			</div>
