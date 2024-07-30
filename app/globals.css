@@ -3,14 +3,14 @@
   @tailwind utilities;
 
 
-/*.chat-window::-webkit-scrollbar {
+.chat-window-1::-webkit-scrollbar {
   display: none;
 }
 
-.chat-window {
+.chat-window-1 {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}*/
+}
 
 .chat-window::-webkit-scrollbar {
   width: 8px;
@@ -30,6 +30,14 @@
   background: #888;
 }
 
+/*.animate-open-sidebar {
+  animation: openSidebar 0.3s forwards;
+}
+
+.animate-close-sidebar {
+  animation: closeSidebar 0.3s forwards;
+}
+*/
   @layer base {
     :root {
       --background: 0 0% 100%;

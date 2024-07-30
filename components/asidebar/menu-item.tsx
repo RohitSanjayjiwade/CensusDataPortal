@@ -5,9 +5,10 @@ interface MenuItemProps {
   path?: string;
   subMenu?: MenuItemProps[];
   current?: string;
+  size?: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, path, subMenu, current }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ label, path, subMenu, current, size }) => {
   const isActive = path && current === path;
 
   return (
