@@ -3,15 +3,13 @@ import React from 'react'
 
 import { MenuLogo } from '@/icons/menu-logo'
 
-type MinMenuProps = {
+type MinNavProps = {
   onShrink(): void
-  current: string
 }
 
-export const MinMenu = ({
+export const MinNav = ({
   onShrink,
-  current,
-}: MinMenuProps) => {
+}: MinNavProps) => {
   return (
     <div className="p-5 flex flex-col h-full">
       <span className="animate-fade-in  delay-300 fill-mode-forwards cursor-pointer">

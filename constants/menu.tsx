@@ -46,3 +46,18 @@ export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
     ],
   },
 ];
+
+
+
+interface NAV_BAR_MENU_PROPS {
+  label: string;
+  path: string;
+}
+
+export const NAV_BAR_MENU: NAV_BAR_MENU_PROPS[] = [
+  { label: "Home", path: "/" },
+  { label: "States", path: "/states" },
+  { label: "Districts", path: "/districts" },
+  { label: "Cities", path: "/cities" },
+  { label: "Towns", path: "/towns" }
+];

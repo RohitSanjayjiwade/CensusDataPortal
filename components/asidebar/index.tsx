@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 type Props = {}
 
-const AsideBar = ({}: Props) => {
+const AsideBar = (props: Props) => {
   const pathname = usePathname()
   const page = pathname.split('/').pop()
   console.log("oyyy",page)

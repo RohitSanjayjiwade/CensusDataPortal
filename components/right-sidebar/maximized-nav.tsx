@@ -1,15 +1,15 @@
-import { SIDE_BAR_MENU } from '@/constants/menu'
+import { NAV_BAR_MENU } from '@/constants/menu'
 import { Menu } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import MenuItem from '../asidebar/menu-item'
+import NavMenuItem from './nav-menu-item'
 
 type Props = {
   onExpand(): void
   current: string
 }
 
-const MaxMenu = ({ current, onExpand }: Props) => {
+const MaxNav = ({ current, onExpand }: Props) => {
   return (
     <div className="py-5 px-4 flex flex-col gap-6 w-full h-full">
       <div className="flex justify-between items-center sticky top-5">
@@ -30,12 +30,11 @@ const MaxMenu = ({ current, onExpand }: Props) => {
           onClick={onExpand}
         />
       </div>
-      <div className="animate-fade-in overflow-y-scroll chat-window-1 delay-300 fill-mode-forwards flex flex-col justify-between h-full pt-10">
-        <div className="flex flex-col">
-          <p className="text-xs text-gray-500 mb-3">MENU</p>
-          {SIDE_BAR_MENU.map((menu, key) => (
-            <MenuItem
-              size="max"
+      <div className="animate-fade-in overflow-y-scroll chat-window-1 delay-300 fill-mode-forwards h-full pt-10">
+        <div className="w-[70%] my-0 mx-auto grid grid-cols-2 gap-x-8 gap-y-4">
+          {/*<p className="text-xs text-gray-500 mb-3">MENU</p>*/}
+          {NAV_BAR_MENU.map((menu, key) => (
+            <NavMenuItem
               {...menu}
               key={key}
               current={current}
@@ -47,4 +46,4 @@ const MaxMenu = ({ current, onExpand }: Props) => {
   )
 }
 
-export default MaxMenu
+export default MaxNav

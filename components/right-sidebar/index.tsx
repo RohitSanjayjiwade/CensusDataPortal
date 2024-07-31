@@ -2,18 +2,18 @@
 import useSideBar from '@/context/use-sidebar'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import MaxMenu from './maximized-menu'
-import { MinMenu } from './minimized-menu'
+import MaxNav from './maximized-nav'
+import { MinNav } from './minimized-nav'
 
 type Props = {}
 
-const SideBar = (props: Props) => {
+const RightSideBar = (props: Props) => {
   const { expand, onExpand, page } = useSideBar()
 
   return (
     <div
       className={cn(
-        'w-[60px] fixed top-0 left-0  transition-all hidden max-lg:block duration-300 ease-in-out',
+        'w-[60px] fixed top-0 right-0 hidden max-lg:block transition-all duration-300 ease-in-out',
         expand == undefined && '',
         expand == true
           ? ' min-w-[55%] max-sm:w-full h-full bg-white'
@@ -21,12 +21,12 @@ const SideBar = (props: Props) => {
       )}
     >
       {expand ? (
-        <MaxMenu
+        <MaxNav
           current={page!}
           onExpand={onExpand}
         />
       ) : (
-        <MinMenu
+        <MinNav
           onShrink={onExpand}
           current={page!}
         />
@@ -35,4 +35,4 @@ const SideBar = (props: Props) => {
   )
 }
 
-export default SideBar
+export default RightSideBar

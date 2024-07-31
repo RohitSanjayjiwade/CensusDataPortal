@@ -2,21 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import AsideBar from "./asidebar";
 import SideBar from "./sidebar";
-
-interface linkProps {
-	name: string;
-	href: string;
-}
-
-const links: linkProps[] = [
-	{ name: "Home", href: "/" },
-	{ name: "States", href: "/states" },
-	{ name: "Districts", href: "/districts" },
-	{ name: "Cities", href: "/cities" },
-	{ name: "Towns", href: "/towns" }
-];
+import RightSideBar from "./right-sidebar";
+import { NAV_BAR_MENU } from "@/constants/menu";
 
 export default function Navbar() {
 	const pathName = usePathname();
@@ -29,15 +17,15 @@ export default function Navbar() {
 			</div>
 			<div className="flex items-center gap-x-8">
 				<ul className="lg:flex gap-x-4 ml-14 hidden">
-					{links.map((link, idx) => (
+					{NAV_BAR_MENU.map((link, idx) => (
 						<div key={idx}>
-							{pathName === link.href ? (
+							{pathName === link.path ? (
 								<li>
-									<Link href={link.href} className="text-white text-base  font-bold">{link.name}</Link>
+									<Link href={link.path} className="text-white text-base  font-bold">{link.label}</Link>
 								</li>
 							) : (
 								<li>
-									<Link href={link.href} className="text-gray-200 text-base  font-medium">{link.name}</Link>
+									<Link href={link.path} className="text-gray-200 text-base  font-medium">{link.label}</Link>
 								</li>
 							)}
 						
@@ -45,8 +33,8 @@ export default function Navbar() {
 
 					))}
 				</ul>
-				
 			</div>
+			<RightSideBar/>
 			</nav>
 			
 		</header>
