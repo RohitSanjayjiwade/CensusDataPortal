@@ -66,8 +66,7 @@ export default function StateList() {
 				</TableHeader>
 				<TableBody>
 					{states.map((state, index) => (
-
-						<TableRow>
+						<TableRow key={state.id}>
 							<TableCell className="font-medium">{index + 1}</TableCell>
 							<TableCell><Link href={`/states/${state.id}`} className='underline decoration-blue-500 text-blue-700 text-base'>{state.name}</Link></TableCell>
 							<TableCell>Paid</TableCell>
