@@ -5,6 +5,7 @@ import { MenuLogo } from '@/icons/menu-logo'
 
 type MinNavProps = {
   onShrink(): void
+  current: string
 }
 
 export const MinNav = ({

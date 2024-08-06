@@ -16,7 +16,7 @@ const SideBar = (props: Props) => {
         'w-[60px] fixed top-0 left-0  transition-all hidden max-lg:block duration-300 ease-in-out',
         expand == undefined && '',
         expand == true
-          ? ' min-w-[55%] max-sm:w-full h-full bg-white'
+          ? ' min-w-[55%] max-sm:w-full z-30 h-full bg-white'
           : expand == false && 'min-w-full] h-auto'
       )}
     >

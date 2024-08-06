@@ -10,13 +10,28 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
+import { PaginationDemo } from "@/components/pagination";
 
-export default function StateDetails({ params }: {
+interface SearchParamsProps {
+  searchParams?: {
+    page?: string;
+    query?: string;
+  };
+}
+
+export default function StateDetails({ params, searchParams }: {
 	params: {
 		stateId: string
 	};
+	searchParams?: {
+    page?: string;
+    query?: string;
+  };
 }) {
 
+	const query = searchParams?.query ?? "";
+    const currentPage = Number(searchParams?.page) || 1;
+    const itemsPerPage = 2; // Define how many items you want per page
 
 	const state = {
 		1: {
@@ -39,6 +54,10 @@ export default function StateDetails({ params }: {
 		notFound();
 	}
 
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const paginatedStates = state[id].d_list.slice(startIndex, startIndex + itemsPerPage);
+	const pageCount = Math.ceil(state[id].d_list.length / itemsPerPage);
+
 	return (
 		<div className="mt-5 w-full">
 			<p><Link href="/states">Back</Link></p>
@@ -56,7 +75,7 @@ export default function StateDetails({ params }: {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{state[id].d_list.map((district: any, index: number) => (
+					{paginatedStates.map((district: any, index: number) => (
 
 						<TableRow>
 							<TableCell className="font-medium">{index + 1}</TableCell>
@@ -70,6 +89,8 @@ export default function StateDetails({ params }: {
 
 				</TableBody>
 			</Table>
+
+			<PaginationDemo pageCount={pageCount} />
 
 		</div>
 
