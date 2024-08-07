@@ -12,6 +12,7 @@ import {
 import slugify from 'slugify';
 import UsersTable from '@/components/UsersTable';
 import { PaginationDemo } from '@/components/pagination';
+import NextBreadcrumb from '@/components/NextBreadcrumb';
 
 interface SearchParamsProps {
   searchParams?: {
@@ -156,8 +157,16 @@ export default async function StateList({searchParams,}: Readonly<SearchParamsPr
 	const pageCount = Math.ceil(states.length / itemsPerPage);
 
 	return (
-		<div className="flex-1 mt-32 overflow-hidden">
-			
+		<div className='flex-1'>
+		<div className="flex flex-col gap-2 mt-32 overflow-hidden">
+			<NextBreadcrumb
+	          homeElement={'Home'}
+	          separator={<span> | </span>}
+	          activeClasses='text-amber-500'
+	          containerClasses='flex py-2 bg-gradient-to-r from-purple-600 to-blue-600' 
+	          listClasses='hover:underline mx-2 font-bold'
+	          capitalizeLinks
+	        />
 			<Table>
 				<TableCaption>A list of States.</TableCaption>
 				<TableHeader>
@@ -186,6 +195,7 @@ export default async function StateList({searchParams,}: Readonly<SearchParamsPr
 			<PaginationDemo pageCount={pageCount} />
 			{/*<UsersTable />*/}
 
+		</div>
 		</div>
 	);
 }

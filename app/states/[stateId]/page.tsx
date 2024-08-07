@@ -11,6 +11,7 @@ import {
 	TableRow,
 } from "@/components/ui/table"
 import { PaginationDemo } from "@/components/pagination";
+import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
   searchParams?: {
@@ -60,9 +61,16 @@ export default function StateDetails({ params, searchParams }: {
 
 	return (
 		<div className="mt-5 w-full">
+			<NextBreadcrumb
+	          homeElement={'Home'}
+	          separator={<span> | </span>}
+	          activeClasses='text-amber-500'
+	          containerClasses='flex py-2 bg-gradient-to-r from-purple-600 to-blue-600' 
+	          listClasses='hover:underline mx-2 font-bold'
+	          capitalizeLinks
+	        />
 			<p><Link href="/states">Back</Link></p>
 
-			
 			<Table>
 				<TableCaption>{state[id].name} District List</TableCaption>
 				<TableHeader>
