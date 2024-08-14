@@ -24,7 +24,7 @@ export default function RootLayout({
 
         <Navbar />
 
-        <main className="w-full max-w-7xl border-b h-full mx-auto mb-10 flex gap-8  justify-between px-5 sm:px-6 py-5 lg:px-8 flex mt-10">
+        <main className="w-full max-w-[1344px] border-b h-full mx-auto mb-10 flex gap-8  justify-between px-5 sm:px-6 py-5 lg:px-8 flex mt-10">
           <AsideBar/>
           {children}
         </main>

@@ -79,7 +79,7 @@ export default async function CitiesDetails({ params, searchParams }: {
 
                         <TableRow key={town.id}>
                             <TableCell className="font-medium">{index + 1}</TableCell>
-                            <TableCell><Link href="#" className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
+                            <TableCell><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
                             <TableCell>{town.population_total}</TableCell>
 
                         </TableRow>
