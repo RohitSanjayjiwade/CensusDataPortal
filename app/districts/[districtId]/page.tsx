@@ -25,7 +25,7 @@ interface SearchParamsProps {
 
 async function getCitiesByDistrictSlug(slug: string) {
     const district = await District_List.find((disrict) => disrict.slug === slug);
-    
+
     if (district) {
         return { districtName: district?.name, cities: district?.cities };
     } else {
@@ -66,11 +66,11 @@ export default async function DistrictDetails({ params, searchParams }: {
             <p><Link href="/states">Back</Link></p>
 
             <Table>
-                <TableCaption>{district && 'cities' in district ? district?.districtName : 'State Name Not Available'} District List</TableCaption>
+                <TableCaption>{district && 'cities' in district ? district?.districtName : 'District Name Not Available'} City List</TableCaption>
                 <TableHeader>
                     <TableRow className='bg-blue-600 text-base hover:bg-blue-800'>
                         <TableHead className='text-white font-bold'>#</TableHead>
-                        <TableHead className='text-white font-bold'>District</TableHead>
+                        <TableHead className='text-white font-bold'>City</TableHead>
                         <TableHead className='text-white font-bold'>Population (Total)</TableHead>
                         <TableHead className='text-white font-bold'>Population (Rural)</TableHead>
                         <TableHead className='text-white font-bold'>Population (Urban)</TableHead>
@@ -81,7 +81,7 @@ export default async function DistrictDetails({ params, searchParams }: {
 
                         <TableRow key={city.id}>
                             <TableCell className="font-medium">{index + 1}</TableCell>
-                            <TableCell><Link href="#" className='underline decoration-blue-500 text-blue-700 text-base'>{city.name}</Link></TableCell>
+                            <TableCell><Link href={`/cities/${city.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{city.name}</Link></TableCell>
                             <TableCell>{city.population_total}</TableCell>
                             <TableCell>{city.population_rural}</TableCell>
                             <TableCell>{city.population_urban}</TableCell>

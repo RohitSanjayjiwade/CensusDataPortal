@@ -1,9 +1,10 @@
 interface City {
     id: number;
     name: string;
+    slug?: string
     population_total: number;
-    "population_rural": number,
-    "population_urban": number
+    population_rural: number,
+    population_urban: number
 }
 
 interface District {
@@ -28,6 +29,7 @@ export const District_List: District[] = [
             {
                 "id": 1, 
                 "name": "South Mumbai",
+                "slug": "1-south-mumbai",
                 "population_total": 1234567,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -35,6 +37,7 @@ export const District_List: District[] = [
             {
                 "id": 2,
                 "name": "Andheri",
+                "slug": "2-andheri",
                 "population_total": 2345678,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -42,6 +45,7 @@ export const District_List: District[] = [
             {
                 "id": 3,
                 "name": "Bandra",
+                "slug": "3-bandra",
                 "population_total": 3456789,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -59,6 +63,7 @@ export const District_List: District[] = [
             {
                 "id": 4,
                 "name": "Pimpri-Chinchwad",
+                "slug": "4-pimpri-chinchwad",
                 "population_total": 3456789,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -66,6 +71,7 @@ export const District_List: District[] = [
             {
                 "id": 5,
                 "name": "Shivajinagar",
+                "slug": "5-shivajinagar",
                 "population_total": 4567890,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -73,6 +79,7 @@ export const District_List: District[] = [
             {
                 "id": 6,
                 "name": "Kothrud",
+                "slug": "6-kothrud",
                 "population_total": 2345678,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -90,6 +97,7 @@ export const District_List: District[] = [
             {
                 "id": 7,
                 "name": "Sitabuldi",
+                "slug": "7-sitabuldi",
                 "population_total": 567890,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -97,6 +105,7 @@ export const District_List: District[] = [
             {
                 "id": 8,
                 "name": "Panchpaoli",
+                "slug": "8-panchpaoli",
                 "population_total": 678901,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -105,6 +114,7 @@ export const District_List: District[] = [
             {
                 "id": 9,
                 "name": "Koradi",
+                "slug": "9-koradi",
                 "population_total": 345678,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -123,6 +133,7 @@ export const District_List: District[] = [
             {
                 "id": 10,
                 "name": "Nashik Road",
+                "slug": "10-nashik-road",
                 "population_total": 789012,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -130,6 +141,7 @@ export const District_List: District[] = [
             {
                 "id": 11,
                 "name": "Deolali",
+                "slug": "11-deolali",
                 "population_total": 890123,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -137,6 +149,7 @@ export const District_List: District[] = [
             {
                 "id": 12,
                 "name": "Gangapur",
+                "slug": "12-gangapur",
                 "population_total": 234567,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -152,8 +165,9 @@ export const District_List: District[] = [
         "population_urban": 17084095,
         "cities": [
             {
-                "id": 13, "name":
-                    "Bhopal City",
+                "id": 13, 
+                "name": "Bhopal City",
+                "slug": "13-bhopal-city",
                 "population_total": 2000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -161,6 +175,7 @@ export const District_List: District[] = [
             {
                 "id": 14,
                 "name": "Habibganj",
+                "slug": "14-habibganj",
                 "population_total": 500000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -178,6 +193,7 @@ export const District_List: District[] = [
             {
                 "id": 15,
                 "name": "Indore City",
+                "slug": "15-indore-city",
                 "population_total": 3000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -185,6 +201,7 @@ export const District_List: District[] = [
             {
                 "id": 16,
                 "name": "Mhow",
+                "slug": "16-mhow",
                 "population_total": 500000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -202,6 +219,7 @@ export const District_List: District[] = [
             {
                 "id": 17,
                 "name": "Gwalior City",
+                "slug": "17-gwalior-city",
                 "population_total": 2000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -209,6 +227,7 @@ export const District_List: District[] = [
             {
                 "id": 18,
                 "name": "Morena",
+                "slug": "18-morena",
                 "population_total": 32000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -226,6 +245,7 @@ export const District_List: District[] = [
             {
                 "id": 19,
                 "name": "Jabalpur City",
+                "slug": "19-jabalpur-city",
                 "population_total": 2600000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -234,6 +254,7 @@ export const District_List: District[] = [
             {
                 "id": 20,
                 "name": "Katangi",
+                "slug": "20-katangi",
                 "population_total": 35657,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -252,6 +273,7 @@ export const District_List: District[] = [
             {
                 "id": 21,
                 "name": "Srinagar City",
+                "slug": "21-srinagar-city",
                 "population_total": 1200000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -260,6 +282,7 @@ export const District_List: District[] = [
             {
                 "id": 22,
                 "name": "Anantnag",
+                "slug": "22-anantnag",
                 "population_total": 50000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -278,6 +301,7 @@ export const District_List: District[] = [
             {
                 "id": 23,
                 "name": "Jammu City",
+                "slug": "23-jammu-city",
                 "population_total": 1500000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -286,6 +310,7 @@ export const District_List: District[] = [
             {
                 "id": 24,
                 "name": "Udhampur",
+                "slug": "24-udhampur",
                 "population_total": 26000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -304,6 +329,7 @@ export const District_List: District[] = [
             {
                 "id": 25,
                 "name": "Anantnag City",
+                "slug": "25-anantnag-city",
                 "population_total": 1000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -312,6 +338,7 @@ export const District_List: District[] = [
             {
                 "id": 26,
                 "name": "Bijbehara",
+                "slug": "26-bijbehara",
                 "population_total": 70000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -330,6 +357,7 @@ export const District_List: District[] = [
             {
                 "id": 27,
                 "name": "Baramulla City",
+                "slug": "27-baramulla-city",
                 "population_total": 1000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -338,6 +366,7 @@ export const District_List: District[] = [
             {
                 "id": 28,
                 "name": "Sopore",
+                "slug": "28-sopore",
                 "population_total": 50000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -357,6 +386,7 @@ export const District_List: District[] = [
             {
                 "id": 29,
                 "name": "Bangalore City",
+                "slug": "29-bangalore-city",
                 "population_total": 9000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -365,6 +395,7 @@ export const District_List: District[] = [
             {
                 "id": 30,
                 "name": "Whitefield",
+                "slug": "30-whitefield",
                 "population_total": 500000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -383,6 +414,7 @@ export const District_List: District[] = [
             {
                 "id": 31,
                 "name": "Mysore City",
+                "slug": "31-mysore-city",
                 "population_total": 3000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -391,6 +423,7 @@ export const District_List: District[] = [
             {
                 "id": 32,
                 "name": "Nanjangud",
+                "slug": "32-nanjangud",
                 "population_total": 5694,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -409,6 +442,7 @@ export const District_List: District[] = [
             {
                 "id": 33,
                 "name": "Hubli City",
+                "slug": "33-hubli-city",
                 "population_total": 1200000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -417,6 +451,7 @@ export const District_List: District[] = [
             {
                 "id": 34,
                 "name": "Dharwad",
+                "slug": "34-dharwad",
                 "population_total": 92999,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -435,6 +470,7 @@ export const District_List: District[] = [
             {
                 "id": 35,
                 "name": "Mangalore City",
+                "slug": "35-mangalore-city",
                 "population_total": 600000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -443,6 +479,7 @@ export const District_List: District[] = [
             {
                 "id": 36,
                 "name": "Udupi",
+                "slug": "36-udupi",
                 "population_total": 23841,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -461,6 +498,7 @@ export const District_List: District[] = [
             {
                 "id": 37,
                 "name": "Coimbatore City",
+                "slug": "37-coimbatore-city",
                 "population_total": 1800000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -469,6 +507,7 @@ export const District_List: District[] = [
             {
                 "id": 38,
                 "name": "Pollachi",
+                "slug": "38-pollachi",
                 "population_total": 10000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -487,6 +526,7 @@ export const District_List: District[] = [
             {
                 "id": 39,
                 "name": "Chennai City",
+                "slug": "39-chennai-city",
                 "population_total": 10000000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -494,6 +534,7 @@ export const District_List: District[] = [
             {
                 "id": 40,
                 "name": "Tambaram",
+                "slug": "40-tambaram",
                 "population_total": 400000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -511,6 +552,7 @@ export const District_List: District[] = [
             {
                 "id": 41,
                 "name": "Hyderabad City",
+                "slug": "41-hyderabad-city",
                 "population_total": 9500000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -518,6 +560,7 @@ export const District_List: District[] = [
             {
                 "id": 42,
                 "name": "Secunderabad",
+                "slug": "42-secunderabad",
                 "population_total": 746000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -535,6 +578,7 @@ export const District_List: District[] = [
             {
                 "id": 43,
                 "name": "Secunderabad City",
+                "slug": "43-secunderabad-city",
                 "population_total": 746000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -552,6 +596,7 @@ export const District_List: District[] = [
             {
                 "id": 44,
                 "name": "Jaipur City",
+                "slug": "44-jaipur-city",
                 "population_total": 3110000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -569,6 +614,7 @@ export const District_List: District[] = [
             {
                 "id": 45,
                 "name": "Jodhpur City",
+                "slug": "45-jodhpur-city",
                 "population_total": 1050000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -586,6 +632,7 @@ export const District_List: District[] = [
             {
                 "id": 46,
                 "name": "Udaipur City",
+                "slug": "46-udaipur-city",
                 "population_total": 478000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -603,7 +650,7 @@ export const District_List: District[] = [
             {
                 "id": 47,
                 "name": "Kota City",
-                // "slug": "1-kota-city",
+                "slug": "47-kota-city",
                 "population_total": 1000000,
                 "population_rural": 500000,
                 "population_urban": 500000
@@ -611,7 +658,7 @@ export const District_List: District[] = [
             {
                 "id": 48,
                 "name": "Bundi",
-                // "slug": "2-bundi",
+                "slug": "48-bundi",
                 "population_total": 250000,
                 "population_rural": 150000,
                 "population_urban": 100000
@@ -619,7 +666,7 @@ export const District_List: District[] = [
             {
                 "id": 49,
                 "name": "Baran",
-                // "slug": "3-baran",
+                "slug": "49-baran",
                 "population_total": 300000,
                 "population_rural": 200000,
                 "population_urban": 100000
@@ -637,6 +684,7 @@ export const District_List: District[] = [
             {
                 "id": 50,
                 "name": "Lucknow City",
+                "slug": "50-lucknow-city",
                 "population_total": 3390000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -654,6 +702,7 @@ export const District_List: District[] = [
             {
                 "id": 51,
                 "name": "Kanpur City",
+                "slug": "51-kanpur-city",
                 "population_total": 2760000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -671,6 +720,7 @@ export const District_List: District[] = [
             {
                 "id": 52,
                 "name": "Agra City",
+                "slug": "52-agra-city",
                 "population_total": 1580000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -688,6 +738,7 @@ export const District_List: District[] = [
             {
                 "id": 53,
                 "name": "Varanasi City",
+                "slug": "53-varanasi-city",
                 "population_total": 1200000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -705,7 +756,7 @@ export const District_List: District[] = [
             {
                 "id": 54,
                 "name": "Ahmedabad City",
-                // "slug": "1-ahmedabad-city",
+                "slug": "54-ahmedabad-city",
                 "population_total": 3500000,
                 "population_rural": 100000,
                 "population_urban": 3400000
@@ -713,7 +764,7 @@ export const District_List: District[] = [
             {
                 "id": 55,
                 "name": "Gandhinagar",
-                // "slug": "2-gandhinagar",
+                "slug": "55-gandhinagar",
                 "population_total": 1200000,
                 "population_rural": 300000,
                 "population_urban": 900000
@@ -721,7 +772,7 @@ export const District_List: District[] = [
             {
                 "id": 56,
                 "name": "Sanand",
-                // "slug": "3-sanand",
+                "slug": "56-sanand",
                 "population_total": 500000,
                 "population_rural": 400000,
                 "population_urban": 100000
@@ -729,7 +780,7 @@ export const District_List: District[] = [
             {
                 "id": 57,
                 "name": "Bavla",
-                // "slug": "4-bavla",
+                "slug": "57-bavla",
                 "population_total": 370000,
                 "population_rural": 270000,
                 "population_urban": 100000
@@ -747,7 +798,7 @@ export const District_List: District[] = [
             {
                 "id": 58,
                 "name": "Surat City",
-                // "slug": "1-surat-city",
+                "slug": "58-surat-city",
                 "population_total": 4000000,
                 "population_rural": 100000,
                 "population_urban": 3900000
@@ -755,7 +806,7 @@ export const District_List: District[] = [
             {
                 "id": 59,
                 "name": "Navsari",
-                // "slug": "2-navsari",
+                "slug": "59-navsari",
                 "population_total": 467797,
                 "population_rural": 300000,
                 "population_urban": 167797
@@ -773,7 +824,7 @@ export const District_List: District[] = [
             {
                 "id": 60,
                 "name": "Vadodara City",
-                // "slug": "1-vadodara-city",
+                "slug": "60-vadodara-city",
                 "population_total": 1700000,
                 "population_rural": 200000,
                 "population_urban": 1500000
@@ -781,7 +832,7 @@ export const District_List: District[] = [
             {
                 "id": 61,
                 "name": "Padra",
-                // "slug": "2-padra",
+                "slug": "61-padra",
                 "population_total": 365771,
                 "population_rural": 200000,
                 "population_urban": 165771
@@ -799,7 +850,7 @@ export const District_List: District[] = [
             {
                 "id": 62,
                 "name": "Rajkot City",
-                // "slug": "1-rajkot-city",
+                "slug": "62-rajkot-city",
                 "population_total": 1200000,
                 "population_rural": 200000,
                 "population_urban": 1000000
@@ -807,7 +858,7 @@ export const District_List: District[] = [
             {
                 "id": 63,
                 "name": "Morbi",
-                // "slug": "2-morbi",
+                "slug": "63-morbi",
                 "population_total": 300488,
                 "population_rural": 150000,
                 "population_urban": 150488
@@ -825,6 +876,7 @@ export const District_List: District[] = [
             {
                 "id": 64,
                 "name": "Kolkata City",
+                "slug": "64-kolkata-city",
                 "population_total": 4400000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -832,6 +884,7 @@ export const District_List: District[] = [
             {
                 "id": 65,
                 "name": "Howrah",
+                "slug": "65-howrah",
                 "population_total": 86679,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -849,7 +902,7 @@ export const District_List: District[] = [
             {
                 "id": 66,
                 "name": "Howrah City",
-                // "slug": "1-howrah-city",
+                "slug": "66-howrah-city",
                 "population_total": 1000000,
                 "population_rural": 150000,
                 "population_urban": 850000
@@ -857,7 +910,7 @@ export const District_List: District[] = [
             {
                 "id": 67,
                 "name": "Uluberia",
-                // "slug": "2-uluberia",
+                "slug": "67-uluberia",
                 "population_total": 77075,
                 "population_rural": 30000,
                 "population_urban": 47075
@@ -875,7 +928,7 @@ export const District_List: District[] = [
             {
                 "id": 68,
                 "name": "Darjeeling City",
-                // "slug": "1-darjeeling-city",
+                "slug": "68-darjeeling-city",
                 "population_total": 1000000,
                 "population_rural": 400000,
                 "population_urban": 600000
@@ -883,7 +936,7 @@ export const District_List: District[] = [
             {
                 "id": 69,
                 "name": "Siliguri",
-                // "slug": "2-siliguri",
+                "slug": "69-siliguri",
                 "population_total": 846823,
                 "population_rural": 200000,
                 "population_urban": 646823
@@ -901,6 +954,7 @@ export const District_List: District[] = [
             {
                 "id": 70,
                 "name": "Siliguri City",
+                "slug": "70-siliguri-city",
                 "population_total": 657000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -918,6 +972,7 @@ export const District_List: District[] = [
             {
                 "id": 71,
                 "name": "Patna City",
+                "slug": "71-patna-city",
                 "population_total": 1680000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -935,6 +990,7 @@ export const District_List: District[] = [
             {
                 "id": 72,
                 "name": "Gaya City",
+                "slug": "72-gaya-city",
                 "population_total": 439000,
                 "population_rural": 51464342,
                 "population_urban": 17084095
@@ -952,7 +1008,7 @@ export const District_List: District[] = [
             {
                 "id": 73,
                 "name": "Bhagalpur City",
-                // "slug": "1-bhagalpur-city",
+                "slug": "73-bhagalpur-city",
                 "population_total": 2500000,
                 "population_rural": 1000000,
                 "population_urban": 1500000
@@ -960,7 +1016,7 @@ export const District_List: District[] = [
             {
                 "id": 74,
                 "name": "Nathnagar",
-                // "slug": "2-nathnagar",
+                "slug": "74-nathnagar",
                 "population_total": 537766,
                 "population_rural": 300000,
                 "population_urban": 237766
@@ -978,7 +1034,7 @@ export const District_List: District[] = [
             {
                 "id": 75,
                 "name": "Muzaffarpur City",
-                // "slug": "1-muzaffarpur-city",
+                "slug": "75-muzaffarpur-city",
                 "population_total": 3500000,
                 "population_rural": 1500000,
                 "population_urban": 2000000
@@ -986,11 +1042,11 @@ export const District_List: District[] = [
             {
                 "id": 76,
                 "name": "Kanti",
-                // "slug": "2-kanti",
+                "slug": "76-kanti",
                 "population_total": 1278610,
                 "population_rural": 500000,
                 "population_urban": 778610
             }
         ]
-    }
+    },
 ];
