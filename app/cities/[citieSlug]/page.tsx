@@ -16,6 +16,9 @@ import { PaginationDemo } from "@/components/pagination";
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
+    params: {
+        citieSlug: string
+    };
     searchParams?: {
         page?: string;
         query?: string;
@@ -34,16 +37,8 @@ async function getVillagesByCitiesSlug(slug: string) {
     }
 }
 
-export default async function CitiesDetails({ params, searchParams }: {
-    params: {
-        citieId: string
-    };
-    searchParams?: {
-        page?: string;
-        query?: string;
-    };
-}) {
-    const city = await getVillagesByCitiesSlug(params.citieId);
+export default async function CitiesDetails({ params, searchParams }: SearchParamsProps) {
+    const city = await getVillagesByCitiesSlug(params.citieSlug);
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
     const itemsPerPage = 2; // Define how many items you want per page
@@ -68,19 +63,19 @@ export default async function CitiesDetails({ params, searchParams }: {
             <Table>
                 <TableCaption>{city && 'villages' in city ? city?.cityName : 'City Name Not Available'} Town List</TableCaption>
                 <TableHeader>
-                    <TableRow className='bg-blue-600 text-base hover:bg-blue-800'>
-                        <TableHead className='text-white font-bold'>#</TableHead>
-                        <TableHead className='text-white font-bold'>Town</TableHead>
-                        <TableHead className='text-white font-bold'>Population (Total)</TableHead>
+                    <TableRow className='bg-blue-600 text-base max-sm:text-xs hover:bg-blue-800'>
+                        <TableHead className='text-white font-bold p-2.5'>#</TableHead>
+                        <TableHead className='text-white font-bold p-2.5 w-4/12'>Town</TableHead>
+                        <TableHead className='text-white font-bold p-2.5'>Population (Total)</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {paginatedStates ? paginatedStates.map((town: any, index: number) => (
 
-                        <TableRow key={town.id}>
-                            <TableCell className="font-medium">{index + 1}</TableCell>
-                            <TableCell><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
-                            <TableCell>{town.population_total}</TableCell>
+                        <TableRow key={town.id} className='text-base max-sm:text-xs'>
+                            <TableCell className="font-medium p-2.5">{index + 1}</TableCell>
+                            <TableCell className='p-2.5'><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
+                            <TableCell className='p-2.5'>{town.population_total}</TableCell>
 
                         </TableRow>
                     )) : (

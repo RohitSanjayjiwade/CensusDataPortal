@@ -49,26 +49,26 @@ export default function Towns({ searchParams, }: Readonly<SearchParamsProps>) {
 				<Table>
 					<TableCaption>A list of Towns.</TableCaption>
 					<TableHeader>
-						<TableRow className='bg-blue-600 text-base hover:bg-blue-800 w-auto'>
-							<TableHead className='text-white font-bold'>#</TableHead>
-							<TableHead className='text-white font-bold w-4/12'>Town</TableHead>
-							<TableHead className='text-white font-bold w-1/5'>District</TableHead>
-							<TableHead className='text-white font-bold'>Population</TableHead>
-							<TableHead className='text-white font-bold'>Houses</TableHead>
-							<TableHead className='text-white font-bold'>Sex-Ratio</TableHead>
-							<TableHead className='text-white font-bold'>Literacy</TableHead>
+						<TableRow className='bg-blue-600 text-base hover:bg-blue-800'>
+							<TableHead className='text-white font-bold p-2.5'>#</TableHead>
+							<TableHead className='text-white font-bold p-2.5 w-4/12'>Town</TableHead>
+							<TableHead className='text-white font-bold p-2.5 w-1/5'>District</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Population</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Houses</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Sex-Ratio</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Literacy</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{paginatedStates.map((town, index) => (
-							<TableRow key={town.id}>
-								<TableCell className="font-medium">{index + 1}</TableCell>
-								<TableCell><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
-								<TableCell><Link href="#" className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
-								<TableCell className='text-base'>{town.population_total}</TableCell>
-								<TableCell className='text-base'>12332</TableCell>
-								<TableCell className='text-base'>898</TableCell>
-								<TableCell className='text-base'>70.32%</TableCell>
+							<TableRow key={town.id} className='text-base max-sm:text-xs'>
+								<TableCell className="font-medium p-2.5">{index + 1}</TableCell>
+								<TableCell className='p-2.5'><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
+								<TableCell className='p-2.5'><Link href="#" className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
+								<TableCell className='p-2.5'>{town.population_total}</TableCell>
+								<TableCell className='p-2.5'>12332</TableCell>
+								<TableCell className='p-2.5'>898</TableCell>
+								<TableCell className='p-2.5'>70.32%</TableCell>
 
 							</TableRow>
 						))}

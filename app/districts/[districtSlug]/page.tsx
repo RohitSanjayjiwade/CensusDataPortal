@@ -16,6 +16,9 @@ import { PaginationDemo } from "@/components/pagination";
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
+    params: {
+        districtSlug: string
+    };
     searchParams?: {
         page?: string;
         query?: string;
@@ -34,16 +37,8 @@ async function getCitiesByDistrictSlug(slug: string) {
     }
 }
 
-export default async function DistrictDetails({ params, searchParams }: {
-    params: {
-        districtId: string
-    };
-    searchParams?: {
-        page?: string;
-        query?: string;
-    };
-}) {
-    const district = await getCitiesByDistrictSlug(params.districtId);
+export default async function DistrictDetails({ params, searchParams }: SearchParamsProps) {
+    const district = await getCitiesByDistrictSlug(params.districtSlug);
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
     const itemsPerPage = 2; // Define how many items you want per page
@@ -68,23 +63,23 @@ export default async function DistrictDetails({ params, searchParams }: {
             <Table>
                 <TableCaption>{district && 'cities' in district ? district?.districtName : 'District Name Not Available'} City List</TableCaption>
                 <TableHeader>
-                    <TableRow className='bg-blue-600 text-base hover:bg-blue-800'>
-                        <TableHead className='text-white font-bold'>#</TableHead>
-                        <TableHead className='text-white font-bold'>City</TableHead>
-                        <TableHead className='text-white font-bold'>Population (Total)</TableHead>
-                        <TableHead className='text-white font-bold'>Population (Rural)</TableHead>
-                        <TableHead className='text-white font-bold'>Population (Urban)</TableHead>
+                    <TableRow className='bg-blue-600 text-base max-sm:text-sm hover:bg-blue-800'>
+                        <TableHead className='text-white font-bold p-2.5'>#</TableHead>
+                        <TableHead className='text-white font-bold p-2.5 w-4/12'>City</TableHead>
+                        <TableHead className='text-white font-bold p-2.5'>Population (Total)</TableHead>
+                        <TableHead className='text-white font-bold p-2.5'>Population (Rural)</TableHead>
+                        <TableHead className='text-white font-bold p-2.5'>Population (Urban)</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {paginatedStates ? paginatedStates.map((city: any, index: number) => (
 
-                        <TableRow key={city.id}>
-                            <TableCell className="font-medium">{index + 1}</TableCell>
-                            <TableCell><Link href={`/cities/${city.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{city.name}</Link></TableCell>
-                            <TableCell>{city.population_total}</TableCell>
-                            <TableCell>{city.population_rural}</TableCell>
-                            <TableCell>{city.population_urban}</TableCell>
+                        <TableRow key={city.id} className='text-base max-sm:text-xs'>
+                            <TableCell className="font-medium p-2.5">{index + 1}</TableCell>
+                            <TableCell className='p-2.5'><Link href={`/cities/${city.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{city.name}</Link></TableCell>
+                            <TableCell className='p-2.5'>{city.population_total}</TableCell>
+                            <TableCell className='p-2.5'>{city.population_rural}</TableCell>
+                            <TableCell className='p-2.5'>{city.population_urban}</TableCell>
 
                         </TableRow>
                     )) : (

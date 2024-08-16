@@ -26,116 +26,6 @@ export default async function DistrictList({searchParams,}: Readonly<SearchParam
     const currentPage = Number(searchParams?.page) || 1;
     const itemsPerPage = 10; // Define how many items you want per page
 
-	// const districts = [
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// 	{ name: "JK", id: 3 },
-	// 	{ name: "MH", id: 1 },
-	// 	{ name: "MP", id: 2 },
-	// ];
-
 	// // Function to generate slug from state name
 	// const generateSlug = (text: string) => {
 	// 	return slugify(text, { lower: true, remove: /[*+~.()'"!:@]/g });
@@ -169,22 +59,22 @@ export default async function DistrictList({searchParams,}: Readonly<SearchParam
 				<Table>
 					<TableCaption>A list of Districts.</TableCaption>
 					<TableHeader>
-						<TableRow className='bg-blue-600 text-base hover:bg-blue-800'>
-							<TableHead className='text-white font-bold'>#</TableHead>
-							<TableHead className='text-white font-bold'>District</TableHead>
-							<TableHead className='text-white font-bold'>Population (Total)</TableHead>
-							<TableHead className='text-white font-bold'>Population (Rural)</TableHead>
-							<TableHead className='text-white font-bold'>Population (Urban)</TableHead>
+						<TableRow className='bg-blue-600 text-base max-sm:text-sm hover:bg-blue-800'>
+							<TableHead className='text-white font-bold p-2.5'>#</TableHead>
+							<TableHead className='text-white font-bold p-2.5 w-4/12'>District</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Population (Total)</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Population (Rural)</TableHead>
+							<TableHead className='text-white font-bold p-2.5'>Population (Urban)</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{paginatedStates.map((district, index) => (
-							<TableRow key={district.id}>
-								<TableCell className="font-medium">{index + 1}</TableCell>
-								<TableCell><Link href={`/districts/${district.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{district.name}</Link></TableCell>
-								<TableCell>{district.population_total}</TableCell>
-								<TableCell>{district.population_rural}</TableCell>
-								<TableCell>{district.population_urban}</TableCell>
+							<TableRow key={district.id} className='text-base max-sm:text-xs'>
+								<TableCell className="font-medium p-2.5">{index + 1}</TableCell>
+								<TableCell className='p-2.5'><Link href={`/districts/${district.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{district.name}</Link></TableCell>
+								<TableCell className='p-2.5'>{district.population_total}</TableCell>
+								<TableCell className='p-2.5'>{district.population_rural}</TableCell>
+								<TableCell className='p-2.5'>{district.population_urban}</TableCell>
 
 							</TableRow>
 						))}
