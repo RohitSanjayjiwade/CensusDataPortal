@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { PaginationDemo } from '@/components/pagination';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
+import StaticInfo from '@/components/districts/StaticInfo';
 
 interface SearchParamsProps {
   searchParams?: {
@@ -56,6 +57,9 @@ export default async function DistrictList({searchParams,}: Readonly<SearchParam
 				listClasses='hover:underline mx-2 font-bold'
 				capitalizeLinks
 				/>
+				{/* Static Information Section */}
+				<StaticInfo />
+				{/* <h2 className='text-base xl:text-2xl font-semibold'>District Census Table</h2> */}
 				<Table>
 					<TableCaption>A list of Districts.</TableCaption>
 					<TableHeader>

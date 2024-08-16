@@ -59,6 +59,8 @@ export default async function StateList({ searchParams, }: Readonly<SearchParams
 					listClasses='hover:underline mx-2 font-bold'
 					capitalizeLinks
 				/>
+				{/* Static Information Section */}
+				<StaticInfo />
 				<h2 className='text-base xl:text-2xl font-semibold'>State Census Table</h2>
 				<Table>
 					<TableCaption>A list of States.</TableCaption>

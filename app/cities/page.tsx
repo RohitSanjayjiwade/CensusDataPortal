@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { PaginationDemo } from '@/components/pagination';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
+import StaticInfo from '@/components/cities/StaticInfo';
 
 interface SearchParamsProps {
 	searchParams?: {
@@ -45,6 +46,9 @@ export default async function Cities({ searchParams, }: Readonly<SearchParamsPro
 					listClasses='hover:underline mx-2 font-bold'
 					capitalizeLinks
 				/>
+				{/* Static Information Section */}
+				<StaticInfo />
+				{/* <h2 className='text-base xl:text-2xl font-semibold'>Cities Census Table</h2> */}
 				<Table>
 					<TableCaption>A list of Cities.</TableCaption>
 					<TableHeader>
