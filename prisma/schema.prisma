@@ -139,14 +139,6 @@ model Data {
   nonWorkersPersons        Int?
   nonWorkersMales          Int?
   nonWorkersFemales        Int?
-
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
-
-  // Define unique relation names for Year model
-  years                     Year[]    @relation("DataYear") // Specify a unique name
-  rural_years               Year[]    @relation("RuralDataYear") // Specify another unique name
-  urban_years               Year[]    @relation("UrbanDataYear") // Specify another unique name
 }
 
 // Define the State model
@@ -155,22 +147,24 @@ model State {
   name        String    @unique
   stateCode   String    @unique
   slug        String    @unique
-  cities      City[]    // Opposite relation field for City
 
   // Add opposite relations for Year, District, and Village
-  years       Year[]
   districts   District[]
+  cities      City[]    // Opposite relation field for City
   villages    Village[]
+  years       Year[]
 }
 
 // Define the District model
 model District {
   id           Int      @id @default(autoincrement())
   name         String
-  state        State    @relation(fields: [stateId], references: [id])
-  stateId      Int
   districtCode String   @unique
   slug         String   @unique
+
+  state        State    @relation(fields: [stateId], references: [id], onDelete: Cascade)
+  stateId      Int
+
   cities       City[]   // Opposite relation field for City
   villages     Village[] // Opposite relation field for Village
   years       Year[]
@@ -181,11 +175,13 @@ model City {
   id          Int       @id @default(autoincrement())
   name        String
   cityCode    String    @unique
-  state       State     @relation(fields: [stateId], references: [id])
-  stateId     Int
-  district    District  @relation(fields: [districtId], references: [id])
-  districtId  Int
   slug        String    @unique
+
+  state       State     @relation(fields: [stateId], references: [id], onDelete: Cascade)
+  stateId     Int
+  district    District  @relation(fields: [districtId], references: [id], onDelete: Cascade)
+  districtId  Int
+
   villages    Village[] // Opposite relation field for Village
   years       Year[]    // Opposite relation field for Year
 }
@@ -195,14 +191,17 @@ model Village {
   id              Int       @id @default(autoincrement())
   name            String
   villageCode     String    @unique
-  state           State     @relation(fields: [stateId], references: [id])
-  stateId         Int
-  district        District  @relation(fields: [districtId], references: [id])
-  districtId      Int
-  city            City      @relation(fields: [cityId], references: [id])
-  cityId          Int
   slug            String    @unique
+
+  state           State     @relation(fields: [stateId], references: [id], onDelete: Cascade)
+  stateId         Int
+  district        District  @relation(fields: [districtId], references: [id], onDelete: Cascade)
+  districtId      Int
+  city            City      @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  cityId          Int
+
   years           Year[]    // Opposite relation field for Year
+  
   pincode         String?
   villageType     String?
   deliveryStatus  String?
@@ -219,22 +218,21 @@ model Village {
 model Year {
   id           Int       @id @default(autoincrement())
   year         Int
-  state        State?    @relation(fields: [stateId], references: [id])
+
+  state        State?    @relation(fields: [stateId], references: [id], onDelete: Cascade)
   stateId      Int?
-  district     District? @relation(fields: [districtId], references: [id])
+  district     District? @relation(fields: [districtId], references: [id], onDelete: Cascade)
   districtId   Int?
-  city         City?     @relation(fields: [cityId], references: [id])
+  city         City?     @relation(fields: [cityId], references: [id], onDelete: Cascade)
   cityId       Int?
-  village      Village?  @relation(fields: [villageId], references: [id])
+  village      Village?  @relation(fields: [villageId], references: [id], onDelete: Cascade)
   villageId    Int?
   
   // Relationships with Data model
-  data         Data?     @relation("DataYear", fields: [dataId], references: [id])
-  rural_data   Data?     @relation("RuralDataYear", fields: [ruralDataId], references: [id])
-  urban_data   Data?     @relation("UrbanDataYear", fields: [urbanDataId], references: [id])
-  
-  // Foreign keys
+  data         Data?     @relation(fields: [dataId], references: [id], onDelete: Cascade)
   dataId       Int?
+  rural_data   Data?     @relation(fields: [ruralDataId], references: [id], onDelete: Cascade)
   ruralDataId  Int?
+  urban_data   Data?     @relation(fields: [urbanDataId], references: [id], onDelete: Cascade)
   urbanDataId  Int?
 }
