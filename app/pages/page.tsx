@@ -9,7 +9,7 @@ const MyComponent = () => {
     setIsLoading(true);
     try {
       const response = await fetch('/pages/api/populateDatabase', {
-        // method: 'POST', // Use POST to trigger database population
+        method: 'POST', // Use POST to trigger database population
       });
       if (!response.ok) {
         throw new Error('Failed to populate database');
@@ -24,10 +24,10 @@ const MyComponent = () => {
     }
   };
 
-  useEffect(() => {
-    // Call the populateDatabase function when component mounts (or based on an event)
-    populateDatabase();
-  }, []); // Empty dependency array means this effect runs once on mount
+  // useEffect(() => {
+  //   // Call the populateDatabase function when component mounts (or based on an event)
+  //   populateDatabase();
+  // }, []); // Empty dependency array means this effect runs once on mount
 
   return (
     <div>

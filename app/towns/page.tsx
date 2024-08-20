@@ -46,6 +46,9 @@ export default function Towns({ searchParams, }: Readonly<SearchParamsProps>) {
 					listClasses='hover:underline mx-2 font-bold'
 					capitalizeLinks
 				/>
+				<h1 className="xl:text-[40px] text-gray-900 subpixel-antialiased font-semibold mb-10">
+					Towns List India Population 2022
+				</h1>
 				<Table>
 					<TableCaption>A list of Towns.</TableCaption>
 					<TableHeader>

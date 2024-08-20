@@ -17,7 +17,7 @@ datasource db {
 // Define the Data model
 model Data {
   id                        Int       @id @default(autoincrement())
-  stateCode                 String    @unique
+  stateCode                 String    
   districtCode              String
   subDistrictCode           String
   townVillageCode           String
@@ -139,6 +139,12 @@ model Data {
   nonWorkersPersons        Int?
   nonWorkersMales          Int?
   nonWorkersFemales        Int?
+
+  // Relation fields to link with Year model
+  // Opposite relations to Year model
+  yearGeneralData    Year? @relation(name: "generalData")
+  yearRuralData      Year? @relation(name: "ruralData")
+  yearUrbanData      Year? @relation(name: "urbanData")
 }
 
 // Define the State model
@@ -201,7 +207,7 @@ model Village {
   cityId          Int
 
   years           Year[]    // Opposite relation field for Year
-  
+
   pincode         String?
   villageType     String?
   deliveryStatus  String?
@@ -229,10 +235,10 @@ model Year {
   villageId    Int?
   
   // Relationships with Data model
-  data         Data?     @relation(fields: [dataId], references: [id], onDelete: Cascade)
-  dataId       Int?
-  rural_data   Data?     @relation(fields: [ruralDataId], references: [id], onDelete: Cascade)
-  ruralDataId  Int?
-  urban_data   Data?     @relation(fields: [urbanDataId], references: [id], onDelete: Cascade)
-  urbanDataId  Int?
+  data         Data?     @relation(name: "generalData", fields: [dataId], references: [id], onDelete: Cascade)
+  dataId       Int?      @unique
+  rural_data   Data?     @relation(name: "ruralData", fields: [ruralDataId], references: [id], onDelete: Cascade)
+  ruralDataId  Int?      @unique
+  urban_data   Data?     @relation(name: "urbanData", fields: [urbanDataId], references: [id], onDelete: Cascade)
+  urbanDataId  Int?      @unique
 }

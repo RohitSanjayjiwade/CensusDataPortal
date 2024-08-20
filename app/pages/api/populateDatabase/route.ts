@@ -1,10 +1,10 @@
 // pages/api/populateDatabase.ts
 // touch pages/api/populateDatabase.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import * as excel from 'exceljs';
+// import * as excel from 'exceljs';
 
 import ExcelJS from 'exceljs'; // Ensure you have exceljs installed
-import prisma from '@/app/utils/db';
+import { client } from '@/lib/prisma'
 import { NextResponse } from 'next/server';
 
 
@@ -12,9 +12,12 @@ import { NextResponse } from 'next/server';
 async function processRows(rows: any[][], maxRowsToProcess: number) {
   let rowCount = 0;
 
-  for (const rowData of rows) {
-    if (rowCount >= maxRowsToProcess) break;
+  // Skip the first row (header) by slicing the rows array
+  const dataRows = rows.slice(1);
 
+  for (const rowData of dataRows) {
+    if (rowCount >= maxRowsToProcess) break;
+    console.log(rowCount)
     try {
       // Destructure row data into variables
       const [
@@ -35,18 +38,22 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
         marginOtherWorkLessTM, marginOtherWorkLessTF, noWorkP, noWorkM, noWorkF
       ] = rowData;
 
+      console.log("oyyyyyyyyyyyyy",typeof(State.toString()),State.toString())
+      console.log(typeof(District.toString()), District.toString())
+      console.log("Hoyyy",typeof(No_HH), No_HH)
+
       // Create database record using Prisma
-      const data = await prisma.data.create({
+      const data = await client.data.create({
         data: {
-          stateCode: State,
-          districtCode: District,
-          subDistrictCode: Subdistt,
-          townVillageCode: TownVillage,
-          wardCode: Ward,
-          enumerationBlockCode: EB,
-          levelOfAdminUnit: Level,
-          areaName: Name,
-          totalRuralUrban: TRU,
+          stateCode: State.toString(),
+          districtCode: District.toString(),
+          subDistrictCode: Subdistt.toString(),
+          townVillageCode: TownVillage.toString(),
+          wardCode: Ward.toString(),
+          enumerationBlockCode: EB.toString(),
+          levelOfAdminUnit: Level.toString(),
+          areaName: Name.toString(),
+          totalRuralUrban: TRU.toString(),
           noOfHousehold: parseInt(No_HH) || 0,
           totalPopulationPersons: parseInt(TOT_P) || 0,
           totalPopulationMales: parseInt(TOT_M) || 0,
@@ -136,7 +143,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
         },
       });
 
-      // Handle administrative levels and year association based on 'Level' and 'totalRuralUrban'
+      // // Handle administrative levels and year association based on 'Level' and 'totalRuralUrban'
       if (data) {
         console.log(`Level ${Level}`);
         console.log(`TRU: ${TRU}`);
@@ -145,121 +152,213 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
 
         switch (Level) {
           case 'STATE':
-            const state = await prisma.state.upsert({
-              where: { stateCode: State },
+            const state = await client.state.upsert({
+              where: { stateCode: State.toString() },
               update: {},
               create: {
-                stateCode: State,
-                name: Name,
-                slug: Name.toLowerCase().replace(/ /g, '-'), // Generate slug from areaName
+                stateCode: State.toString(),
+                name: Name.toString(),
+                slug: Name.toString().toLowerCase().replace(/ /g, '-'), // Generate slug from areaName
               },
             });
 
-            await prisma.year.create({
-              data: {
-                year,
-                state: { connect: { stateCode: State } },
-                [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
-                  connect: { id: data.id },
-                },
+            const yearId = await client.year.findFirst({
+              where:{
+                year: year,
+                stateId: state.id
               },
-            });
+              select:{
+                id: true
+              }
+            })
+
+            if(!yearId)
+            {
+              await client.year.create({
+                data: {
+                  year,
+                  state: { connect: { stateCode: State.toString() } },
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
+            else{
+              await client.year.update({
+                where: { id: yearId.id, state:state },
+                data: {
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
             break;
 
           case 'DISTRICT':
-            const stateForDistrict = await prisma.state.findUnique({
-              where: { stateCode: State },
+            const stateForDistrict = await client.state.findUnique({
+              where: { stateCode: State.toString() },
             });
 
-            const district = await prisma.district.upsert({
-              where: { districtCode: District },
+            const district = await client.district.upsert({
+              where: { districtCode: District.toString() },
               update: {},
               create: {
-                districtCode: District,
-                name: Name,
+                districtCode: District.toString(),
+                name: Name.toString(),
                 state: { connect: { id: stateForDistrict?.id } },
-                slug: `${District}-${Name.toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${District}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
               },
             });
 
-            await prisma.year.create({
-              data: {
-                year,
-                district: { connect: { districtCode: District } },
-                [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
-                  connect: { id: data.id },
-                },
+            const yeaId = await client.year.findFirst({
+              where:{
+                year: year,
+                districtId: district.id
               },
-            });
+              select:{
+                id: true
+              }
+            })
+
+            if(!yeaId)
+            {
+              await client.year.create({
+                data: {
+                  year,
+                  district: { connect: { districtCode: District.toString() } },
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
+            else
+            {
+              await client.year.update({
+                where: { id: yeaId.id, district:district },
+                data: {
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
             break;
 
           case 'SUB-DISTRICT':
-            const stateForCity = await prisma.state.findUnique({
-              where: { stateCode: State },
+            const stateForCity = await client.state.findUnique({
+              where: { stateCode: State.toString() },
             });
 
-            const districtForCity = await prisma.district.findUnique({
-              where: { districtCode: District },
+            const districtForCity = await client.district.findUnique({
+              where: { districtCode: District.toString() },
             });
 
-            const city = await prisma.city.upsert({
-              where: { cityCode: Subdistt },
+            const city = await client.city.upsert({
+              where: { cityCode: Subdistt.toString() },
               update: {},
               create: {
-                cityCode: Subdistt,
-                name: Name,
+                cityCode: Subdistt.toString(),
+                name: Name.toString(),
                 state: { connect: { id: stateForCity?.id } },
                 district: { connect: { id: districtForCity?.id } },
-                slug: `${Subdistt}-${Name.toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${Subdistt}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
               },
             });
 
-            await prisma.year.create({
-              data: {
-                year,
-                city: { connect: { cityCode: Subdistt } },
-                [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
-                  connect: { id: data.id },
-                },
+            const yeId = await client.year.findFirst({
+              where:{
+                year: year,
+                cityId: city.id
               },
-            });
+              select:{
+                id: true
+              }
+            })
+
+            if(!yeId){
+              await client.year.create({
+                data: {
+                  year,
+                  city: { connect: { cityCode: Subdistt.toString() } },
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
+            else{
+              await client.year.update({
+                where: { id: yeId.id, city:city },
+                data: {
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
             break;
 
           case 'VILLAGE':
-            const stateForVillage = await prisma.state.findUnique({
-              where: { stateCode: State },
+            const stateForVillage = await client.state.findUnique({
+              where: { stateCode: State.toString() },
             });
 
-            const districtForVillage = await prisma.district.findUnique({
-              where: { districtCode: District },
+            const districtForVillage = await client.district.findUnique({
+              where: { districtCode: District.toString() },
             });
 
-            const cityForVillage = await prisma.city.findUnique({
-              where: { cityCode: Subdistt },
+            const cityForVillage = await client.city.findUnique({
+              where: { cityCode: Subdistt.toString() },
             });
 
-            await prisma.village.upsert({
-              where: { villageCode: TownVillage },
+            const village = await client.village.upsert({
+              where: { villageCode: TownVillage.toString() },
               update: {},
               create: {
-                villageCode: TownVillage,
-                name: Name,
+                villageCode: TownVillage.toString(),
+                name: Name.toString(),
                 state: { connect: { id: stateForVillage?.id } },
                 district: { connect: { id: districtForVillage?.id } },
                 city: { connect: { id: cityForVillage?.id } },
-                slug: `${TownVillage}-${Name.toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${TownVillage}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
               },
             });
 
-            await prisma.year.create({
-              data: {
-                year,
-                village: { connect: { villageCode: TownVillage } },
-                [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
-                  connect: { id: data.id },
-                },
+            const yId = await client.year.findFirst({
+              where:{
+                year: year,
+                villageId: village.id
               },
-            });
+              select:{
+                id: true
+              }
+            })
+
+            if(!yId){
+              await client.year.create({
+                data: {
+                  year,
+                  village: { connect: { villageCode: TownVillage.toString() } },
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
+            else
+            {
+              await client.year.update({
+                where: { id: yId.id, village:village },
+                data: {
+                  [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
+                    connect: { id: data.id },
+                  },
+                },
+              });
+            }
             break;
 
           default:
@@ -279,7 +378,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const workbook = new ExcelJS.Workbook();
     
     try {
-  await workbook.xlsx.readFile('/home/vaibhav/Desktop/pop1.xlsx');
+  await workbook.xlsx.readFile('/home/vaibhav/Desktop/PolymerizeLab.webinar_registration.xlsx');
 } catch (error) {
   console.error('Error reading Excel file:', error);
 
@@ -287,19 +386,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-    const worksheet = workbook.getWorksheet;
+    const worksheet = workbook.getWorksheet("Sheet1");
     if (!worksheet) {
       throw new Error('Worksheet not found in the workbook');
     }
-     console.log('Worksheets in the workbook:',worksheet);
+    //  console.log('Worksheets in the workbook:',worksheet);
 workbook.worksheets.forEach((sheet, index) => {
   console.log(`Index: ${index + 1}, Name: ${sheet.name}`);
 });
 
     const rows: any[][] = [];
-    // worksheet.eachRow({ includeEmpty: false }, (row) => {
-    //   rows.push(Object.values(row.values));
-    // });
+    worksheet.eachRow({ includeEmpty: false }, (row) => {
+      rows.push(Object.values(row.values));
+    });
 
     console.log(`Total rows read: ${rows.length}`);
 
