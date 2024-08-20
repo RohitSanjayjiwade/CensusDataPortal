@@ -8,7 +8,6 @@ import { client } from '@/lib/prisma'
 import { NextResponse } from 'next/server';
 
 
-
 async function processRows(rows: any[][], maxRowsToProcess: number) {
   let rowCount = 0;
 
@@ -158,7 +157,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
               create: {
                 stateCode: State.toString(),
                 name: Name.toString(),
-                slug: Name.toString().toLowerCase().replace(/ /g, '-'), // Generate slug from areaName
+                slug: Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''), // Generate slug from areaName
               },
             });
 
@@ -208,7 +207,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
                 districtCode: District.toString(),
                 name: Name.toString(),
                 state: { connect: { id: stateForDistrict?.id } },
-                slug: `${District}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${District.replace(/^0+/, '')}-${Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`, // Generate slug
               },
             });
 
@@ -264,7 +263,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
                 name: Name.toString(),
                 state: { connect: { id: stateForCity?.id } },
                 district: { connect: { id: districtForCity?.id } },
-                slug: `${Subdistt}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${Subdistt.replace(/^0+/, '')}-${Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`, // Generate slug
               },
             });
 
@@ -323,7 +322,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
                 state: { connect: { id: stateForVillage?.id } },
                 district: { connect: { id: districtForVillage?.id } },
                 city: { connect: { id: cityForVillage?.id } },
-                slug: `${TownVillage}-${Name.toString().toLowerCase().replace(/ /g, '-')}`, // Generate slug
+                slug: `${TownVillage.replace(/^0+/, '')}-${Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`, // Generate slug
               },
             });
 
@@ -402,7 +401,7 @@ workbook.worksheets.forEach((sheet, index) => {
 
     console.log(`Total rows read: ${rows.length}`);
 
-    await processRows(rows, 10); // Process the first 10 rows for now
+    await processRows(rows, 1000); // Process the first 10 rows for now
 
     return NextResponse.json({ message: 'Upload successful' });
   } catch (error) {
