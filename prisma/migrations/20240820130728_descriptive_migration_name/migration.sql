@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Data" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "stateCode" TEXT NOT NULL,
     "districtCode" TEXT NOT NULL,
     "subDistrictCode" TEXT NOT NULL,
@@ -95,48 +95,53 @@ CREATE TABLE "Data" (
     "nonWorkersPersons" INTEGER,
     "nonWorkersMales" INTEGER,
     "nonWorkersFemales" INTEGER,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+
+    CONSTRAINT "Data_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "State" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "stateCode" TEXT NOT NULL,
-    "slug" TEXT NOT NULL
+    "slug" TEXT NOT NULL,
+
+    CONSTRAINT "State_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "District" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "stateId" INTEGER NOT NULL,
     "districtCode" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
-    CONSTRAINT "District_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "stateId" INTEGER NOT NULL,
+
+    CONSTRAINT "District_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "City" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "cityCode" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
     "stateId" INTEGER NOT NULL,
     "districtId" INTEGER NOT NULL,
-    "slug" TEXT NOT NULL,
-    CONSTRAINT "City_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "City_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+
+    CONSTRAINT "City_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Village" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "villageCode" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
     "stateId" INTEGER NOT NULL,
     "districtId" INTEGER NOT NULL,
     "cityId" INTEGER NOT NULL,
-    "slug" TEXT NOT NULL,
-    "pincode" TEXT NOT NULL,
+    "pincode" TEXT,
     "villageType" TEXT,
     "deliveryStatus" TEXT,
     "divisionName" TEXT,
@@ -145,14 +150,13 @@ CREATE TABLE "Village" (
     "telephone" TEXT,
     "relatedSuboffice" TEXT,
     "relatedHeadoffice" TEXT,
-    CONSTRAINT "Village_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Village_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Village_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "City" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+
+    CONSTRAINT "Village_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Year" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "year" INTEGER NOT NULL,
     "stateId" INTEGER,
     "districtId" INTEGER,
@@ -161,26 +165,81 @@ CREATE TABLE "Year" (
     "dataId" INTEGER,
     "ruralDataId" INTEGER,
     "urbanDataId" INTEGER,
-    CONSTRAINT "Year_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "City" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_villageId_fkey" FOREIGN KEY ("villageId") REFERENCES "Village" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_dataId_fkey" FOREIGN KEY ("dataId") REFERENCES "Data" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_ruralDataId_fkey" FOREIGN KEY ("ruralDataId") REFERENCES "Data" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Year_urbanDataId_fkey" FOREIGN KEY ("urbanDataId") REFERENCES "Data" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+    CONSTRAINT "Year_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "State_name_key" ON "State"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "State_stateCode_key" ON "State"("stateCode");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "State_slug_key" ON "State"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "District_districtCode_key" ON "District"("districtCode");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "District_slug_key" ON "District"("slug");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "City_cityCode_key" ON "City"("cityCode");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "City_slug_key" ON "City"("slug");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Village_villageCode_key" ON "Village"("villageCode");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Village_slug_key" ON "Village"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Year_dataId_key" ON "Year"("dataId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Year_ruralDataId_key" ON "Year"("ruralDataId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Year_urbanDataId_key" ON "Year"("urbanDataId");
+
+-- AddForeignKey
+ALTER TABLE "District" ADD CONSTRAINT "District_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "City" ADD CONSTRAINT "City_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "City" ADD CONSTRAINT "City_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Village" ADD CONSTRAINT "Village_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Village" ADD CONSTRAINT "Village_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Village" ADD CONSTRAINT "Village_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "City"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_stateId_fkey" FOREIGN KEY ("stateId") REFERENCES "State"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_districtId_fkey" FOREIGN KEY ("districtId") REFERENCES "District"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "City"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_villageId_fkey" FOREIGN KEY ("villageId") REFERENCES "Village"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_dataId_fkey" FOREIGN KEY ("dataId") REFERENCES "Data"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_ruralDataId_fkey" FOREIGN KEY ("ruralDataId") REFERENCES "Data"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Year" ADD CONSTRAINT "Year_urbanDataId_fkey" FOREIGN KEY ("urbanDataId") REFERENCES "Data"("id") ON DELETE CASCADE ON UPDATE CASCADE;

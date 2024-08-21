@@ -37,9 +37,9 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
         marginOtherWorkLessTM, marginOtherWorkLessTF, noWorkP, noWorkM, noWorkF
       ] = rowData;
 
-      console.log("oyyyyyyyyyyyyy",typeof(State.toString()),State.toString())
-      console.log(typeof(District.toString()), District.toString())
-      console.log("Hoyyy",typeof(No_HH), No_HH)
+      // console.log("oyyyyyyyyyyyyy",typeof(State.toString()),State.toString())
+      // console.log(typeof(District.toString()), District.toString())
+      // console.log("Hoyyy",typeof(No_HH), No_HH)
 
       // Create database record using Prisma
       const data = await client.data.create({
@@ -152,10 +152,10 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
         switch (Level) {
           case 'STATE':
             const state = await client.state.upsert({
-              where: { stateCode: State.toString() },
+              where: { stateCode: `${State.replace(/^0+/, '')}` },
               update: {},
               create: {
-                stateCode: State.toString(),
+                stateCode: `${State.replace(/^0+/, '')}`,
                 name: Name.toString(),
                 slug: Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''), // Generate slug from areaName
               },
@@ -176,7 +176,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
               await client.year.create({
                 data: {
                   year,
-                  state: { connect: { stateCode: State.toString() } },
+                  state: { connect: { stateCode: `${State.replace(/^0+/, '')}` } },
                   [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
                     connect: { id: data.id },
                   },
@@ -197,14 +197,14 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
 
           case 'DISTRICT':
             const stateForDistrict = await client.state.findUnique({
-              where: { stateCode: State.toString() },
+              where: { stateCode: `${State.replace(/^0+/, '')}` },
             });
 
             const district = await client.district.upsert({
-              where: { districtCode: District.toString() },
+              where: { districtCode: `${District.replace(/^0+/, '')}` },
               update: {},
               create: {
-                districtCode: District.toString(),
+                districtCode: `${District.replace(/^0+/, '')}`,
                 name: Name.toString(),
                 state: { connect: { id: stateForDistrict?.id } },
                 slug: `${District.replace(/^0+/, '')}-${Name.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`, // Generate slug
@@ -226,7 +226,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
               await client.year.create({
                 data: {
                   year,
-                  district: { connect: { districtCode: District.toString() } },
+                  district: { connect: { districtCode: `${District.replace(/^0+/, '')}` } },
                   [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
                     connect: { id: data.id },
                   },
@@ -248,18 +248,18 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
 
           case 'SUB-DISTRICT':
             const stateForCity = await client.state.findUnique({
-              where: { stateCode: State.toString() },
+              where: { stateCode:`${State.replace(/^0+/, '')}` },
             });
 
             const districtForCity = await client.district.findUnique({
-              where: { districtCode: District.toString() },
+              where: { districtCode: `${District.replace(/^0+/, '')}` },
             });
 
             const city = await client.city.upsert({
-              where: { cityCode: Subdistt.toString() },
+              where: { cityCode: `${Subdistt.replace(/^0+/, '')}` },
               update: {},
               create: {
-                cityCode: Subdistt.toString(),
+                cityCode: `${Subdistt.replace(/^0+/, '')}`,
                 name: Name.toString(),
                 state: { connect: { id: stateForCity?.id } },
                 district: { connect: { id: districtForCity?.id } },
@@ -281,7 +281,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
               await client.year.create({
                 data: {
                   year,
-                  city: { connect: { cityCode: Subdistt.toString() } },
+                  city: { connect: { cityCode: `${Subdistt.replace(/^0+/, '')}` } },
                   [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
                     connect: { id: data.id },
                   },
@@ -302,22 +302,22 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
 
           case 'VILLAGE':
             const stateForVillage = await client.state.findUnique({
-              where: { stateCode: State.toString() },
+              where: { stateCode: `${State.replace(/^0+/, '')}` },
             });
 
             const districtForVillage = await client.district.findUnique({
-              where: { districtCode: District.toString() },
+              where: { districtCode: `${District.replace(/^0+/, '')}` },
             });
 
             const cityForVillage = await client.city.findUnique({
-              where: { cityCode: Subdistt.toString() },
+              where: { cityCode: `${Subdistt.replace(/^0+/, '')}` },
             });
 
             const village = await client.village.upsert({
-              where: { villageCode: TownVillage.toString() },
+              where: { villageCode: `${TownVillage.replace(/^0+/, '')}` },
               update: {},
               create: {
-                villageCode: TownVillage.toString(),
+                villageCode: `${TownVillage.replace(/^0+/, '')}`,
                 name: Name.toString(),
                 state: { connect: { id: stateForVillage?.id } },
                 district: { connect: { id: districtForVillage?.id } },
@@ -340,7 +340,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
               await client.year.create({
                 data: {
                   year,
-                  village: { connect: { villageCode: TownVillage.toString() } },
+                  village: { connect: { villageCode: `${TownVillage.replace(/^0+/, '')}` } },
                   [TRU === 'Total' ? 'data' : TRU === 'Rural' ? 'rural_data' : 'urban_data']: {
                     connect: { id: data.id },
                   },
@@ -367,6 +367,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
       rowCount++; // Increment row count after processing each row
     } catch (error) {
       console.error(`Error processing row`, error);
+      break;
     }
   }
 }
@@ -401,7 +402,7 @@ workbook.worksheets.forEach((sheet, index) => {
 
     console.log(`Total rows read: ${rows.length}`);
 
-    await processRows(rows, 1000); // Process the first 10 rows for now
+    await processRows(rows, 10001); // Process the first 10 rows for now
 
     return NextResponse.json({ message: 'Upload successful' });
   } catch (error) {
