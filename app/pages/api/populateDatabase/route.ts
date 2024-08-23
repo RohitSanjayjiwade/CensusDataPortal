@@ -1,11 +1,12 @@
 // pages/api/populateDatabase.ts
 // touch pages/api/populateDatabase.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+// import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from "next/server"
 // import * as excel from 'exceljs';
 
 import ExcelJS from 'exceljs'; // Ensure you have exceljs installed
 import { client } from '@/lib/prisma'
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
 
 async function processRows(rows: any[][], maxRowsToProcess: number) {
@@ -373,7 +374,7 @@ async function processRows(rows: any[][], maxRowsToProcess: number) {
 }
 
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextRequest) {
   try {
     const workbook = new ExcelJS.Workbook();
     

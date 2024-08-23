@@ -61,3 +61,20 @@ export const NAV_BAR_MENU: NAV_BAR_MENU_PROPS[] = [
   { label: "Cities", path: "/cities" },
   { label: "Towns", path: "/towns" }
 ];
+
+
+export const State_TABLE_HEADER = [
+  '#',
+  'State',
+  'Population (Total)',
+  'Population (Rural)',
+  'Population (Urban)',
+]
+
+export const District_TABLE_HEADER = [
+  '#',
+  'District',
+  'Population (Total)',
+  'Population (Rural)',
+  'Population (Urban)',
+]
