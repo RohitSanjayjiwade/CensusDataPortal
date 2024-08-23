@@ -40,7 +40,7 @@ export const useStates = (searchParams?: {
     const [loading, setLoading] = useState<boolean>(false)
     const [pageCount, setPageCount] = useState<number>(1)
 
-    const AllDistictsUnderState = async () => {
+    const getAllState = async () => {
         setLoading(true)
         try {
 
@@ -65,7 +65,7 @@ export const useStates = (searchParams?: {
 
 
     useEffect(() => {
-        AllDistictsUnderState()
+        getAllState()
     }, [currentPage])
 
 
@@ -74,6 +74,7 @@ export const useStates = (searchParams?: {
         states,
         loading,
         pageCount,
+        getAllState,
     }
 }
 

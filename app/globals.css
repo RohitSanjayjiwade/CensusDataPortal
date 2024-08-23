@@ -4,6 +4,14 @@
 @tailwind utilities;
 
 
+.bg-color{
+  background-color: #0000FF;
+}
+
+.nav-logo{
+  color: #FFFFFF;
+}
+
 h2{
   font-size: 1.2rem !important;
 }

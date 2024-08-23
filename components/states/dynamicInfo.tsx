@@ -1,29 +1,12 @@
+import { formatPopulationInCrores } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
+
+
 type Props = {
     stateName: string
-    stateTotalData: {
-        noOfHousehold?: number | null;
-        totalPopulationPersons?: number | null;
-        totalPopulationMales?: number | null;
-        totalPopulationFemales?: number | null;
-        literatesPersons?: number | null;
-        literatesMales?: number | null;
-        literatesFemales?: number | null;
-        illiteratesPersons?: number | null; // Optionally include this if you have it
-        illiteratesMales?: number | null;
-        illiteratesFemales?: number | null;
-    } | null;
+    stateTotalData: any | null;
 }
 
-
-const formatPopulationInCrores = (population: number | null | undefined) => {
-    if (population === null || population === undefined) {
-        return 'data not available';
-    }
-
-    // Convert to crores
-    const crores = population / 10000000; // 1 Crore = 10,000,000
-    return crores.toFixed(2) + ' Crores';
-};
 
 
 const DynamicInfo = ({ stateName, stateTotalData }: Props) => {
@@ -84,9 +67,9 @@ const DynamicInfo = ({ stateName, stateTotalData }: Props) => {
         <section className="mb-4">
             <h1 className="xl:text-[40px] leading-tight text-gray-900 subpixel-antialiased font-semibold">{formattedStateName} Population | Sex Ratio | Literacy</h1>
             <p className="text-gray-800 text-base/6 mt-0">
-            As per the latest census data, {formattedStateName} has a population of {formatPopulationInCrores(stateTotalData?.totalPopulationPersons)}. 
-                The total population of {formattedStateName} is {totalPopulation.toLocaleString()}, with males numbering {totalPopulationMales.toLocaleString()} and females {totalPopulationFemales.toLocaleString()}. 
-                {formattedStateName} accounts for {populationPercentage}% of India's population in 2011.
+                As per the latest census data, {formattedStateName} has a population of {formatPopulationInCrores(stateTotalData?.totalPopulationPersons)}.
+                The total population of {formattedStateName} is {formatNumber(totalPopulation)}, with males numbering {formatNumber(totalPopulationMales)} and females {formatNumber(totalPopulationFemales)}.
+                {formattedStateName} accounts for {populationPercentage}% of India&apos;s population in 2011.
                 {/* As per details from Census 2011, {formattedStateName} has a population of {stateTotalData?.totalPopulationPersons} Crores, an increase from 16.62 Crore in 2001. The total population of {formattedStateName} as per the latest census data is 199,812,341, with males numbering 104,480,510 and females 95,331,831. In 2001, the population was 166,197,921, with 87,565,369 males and 78,632,552 females. The total population growth in this decade was 20.23%, compared to 25.80% in the previous decade. {formattedStateName} accounts for 16.50% of India's population in 2011, up from 16.16% in 2001. */}
             </p>
 

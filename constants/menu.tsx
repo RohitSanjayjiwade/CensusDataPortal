@@ -78,3 +78,39 @@ export const District_TABLE_HEADER = [
   'Population (Rural)',
   'Population (Urban)',
 ]
+
+
+
+type TABS_MENU_PROPS = {
+  label: string
+  icon?: JSX.Element
+}
+
+export const STAES_TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: 'overview',
+  },
+  {
+    label: 'demographics',
+  },
+  {
+    label: 'education',
+  },
+  {
+    label: 'employment',
+  },
+]
+
+
+export const OVERVIEW_TABLE_HEADER = [
+  // '#',
+  'Description',
+  '2011',
+  // 'No. of Households',
+  // 'Total Population (Persons)',
+  // 'Total Population (Males)',
+  // 'Total Population (Females)',
+  // 'Literates (Persons)',
+  // 'Literates (Males)',
+  // 'Literates (Females)',
+]

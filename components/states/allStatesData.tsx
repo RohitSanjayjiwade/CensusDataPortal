@@ -4,6 +4,7 @@ import { DataTable } from '../table'
 import { TableCell, TableRow } from '../ui/table'
 import { CardDescription } from '../ui/card'
 import Link from 'next/link'
+import { formatNumber } from '@/lib/utils'
 
 
 type Props = {
@@ -26,11 +27,8 @@ type Props = {
     }[]
 }
 
-const formatNumber = (number: any) => {
-  return number ? number.toLocaleString() : 'N/A'; // Handle cases where number might be null or undefined
-};
 
-const AllStates = ({ states }: Props) => {
+const AllStatesData = ({ states }: Props) => {
   return (
     <DataTable headers={State_TABLE_HEADER} title={'A list of States.'}>
       {states ? (
@@ -51,4 +49,4 @@ const AllStates = ({ states }: Props) => {
   )
 }
 
-export default AllStates
+export default AllStatesData
