@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 
+h2{
+  font-size: 1.2rem !important;
+}
+
 h1, .h1 {
   font-size: calc(1.375rem + 1.5vw) ;
 }
@@ -15,6 +19,9 @@ h3, .h3 {
 }
 h4, .h4 {
   font-size: calc(1.275rem + 0.3vw) ;
+}
+Link, .link {
+  font-size: calc(0.75rem + 0.3vw) ;
 }
 .display-1 {
   font-size: calc(1.725rem + 5.7vw) ;

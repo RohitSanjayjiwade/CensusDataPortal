@@ -147,7 +147,7 @@ export default function Home() {
         </Table>
       </CardContent>
       <CardFooter className="grid justify-items-start gap-2 p-3">
-        <p className="text-gray-800 text-base">India's sex ratio is comparitively very low except few southern states .</p>
+        <p className="text-gray-800 text-base">India&apos;s sex ratio is comparitively very low except few southern states .</p>
         <Button asChild className="bg-blue-600 text-base hover:bg-blue-800"><Link href="#" className=''>Best Sex Ratio</Link></Button>
       </CardFooter>
     </Card>
