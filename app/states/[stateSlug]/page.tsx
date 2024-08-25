@@ -4,6 +4,7 @@ import NextBreadcrumb from "@/components/NextBreadcrumb";
 import StateRelatedDistricts from "@/components/states/stateRelatedDistrict";
 import {
 	onGetStateWithDistricts,
+	onGetStateName,
 
 } from '@/actions/state'
 import NotFound from "@/app/not-found";
@@ -18,6 +19,15 @@ interface SearchParamsProps {
 		query?: string;
 	};
 }
+
+// Function to generate metadata for SEO
+export async function generateMetadata({ params }: SearchParamsProps) {
+	const stateName = await onGetStateName(params.stateSlug);
+	return {
+	  title: `${stateName} Details - Population and Districts`,
+	  description: `Explore detailed information about ${stateName}, including population data and district information.`,
+	};
+  }
 
 export const revalidate = 60; // ISR revalidation
 
@@ -56,6 +66,8 @@ export default async function StateDetails({ params, searchParams }: SearchParam
 					stateTotalData={state?.stateData}
 					stateName={stateName}
 					pageCount={pageCount}
+					stateRuralData={state?.stateRuralData}
+					stateUrbanData={state?.stateUrbanData}
 				/>
 
 

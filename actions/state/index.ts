@@ -2,6 +2,29 @@
 import { client } from '@/lib/prisma'
 
 
+
+
+export const onGetStateName = async(slug: string) => {
+  try{
+    const stateName = await client.state.findUnique({
+      where: {
+        slug: slug,
+      },
+      select:{
+        name: true
+      }
+    })
+
+    if(stateName)
+    {
+      return stateName.name
+    }
+
+  }catch(error){
+    console.log(error)
+  }
+}
+
 export const onGetAllStates = async (page: number, itemsPerPage: number) => {
   try {
     // Query to get the total number of states for pagination

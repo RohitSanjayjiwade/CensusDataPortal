@@ -19,7 +19,7 @@ export const formatNumber = (num: Number | null | undefined) => {
 
 export const formatPopulationInCrores = (population: number | null | undefined) => {
   if (population === null || population === undefined) {
-      return 'data not available';
+    return 'data not available';
   }
 
   // Convert to crores
@@ -51,10 +51,20 @@ export const formatPercentage = (value: number): string => {
 
 export const calculatePercentage = (part: number | null | undefined, whole: number | null | undefined): number => {
   if (whole === null || whole === undefined || whole === 0) {
-      return 0;
+    return 0;
   }
   if (part === null || part === undefined) {
-      return 0;
+    return 0;
   }
   return (part / whole) * 100;
 };
+
+
+
+// Calculate sex ratio
+export const calculateSexRatio = (females: number, males: number) => {
+  if (females === null || females === undefined || females === 0) {
+    return 0;
+  }
+  return ((females / males) * 1000).toFixed(0)
+  };

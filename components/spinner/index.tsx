@@ -31,3 +31,25 @@ export const Spinner = ({ noPadding }: SpinnerProps) => {
     </div>
   )
 }
+// import React from 'react';
+// import Lottie from 'react-lottie';
+// import animationData from '@/animations/loading.json';
+
+// export const Spinner = () => {
+//   const defaultOptions = {
+//     loop: true,
+//     autoplay: true,
+//     animationData,
+//     rendererSettings: {
+//       preserveAspectRatio: 'xMidYMid slice',
+//     },
+//   };
+
+//   return (
+//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+//       <Lottie options={defaultOptions} height={120} width={120} />
+//     </div>
+//   );
+// };
+
+// export default Spinner;
