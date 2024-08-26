@@ -43,7 +43,7 @@ const StateRelatedDistrictData = ({ districts, title }: Props) => {
         </TableRow>
         ))
       ) : (
-        <CardDescription>No District</CardDescription>
+        <CardDescription>No Districts</CardDescription>
       )}
     </DataTable>
   )

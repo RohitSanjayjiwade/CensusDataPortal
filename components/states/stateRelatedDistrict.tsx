@@ -159,7 +159,7 @@ type Props = {
     stateName: string
 }
 
-const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount }: Props) => {
+const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount, stateRuralData, stateUrbanData }: Props) => {
     // const filteredStates = states.filter((state) =>
     //     state.name.toLowerCase().includes(query.toLowerCase())
     //   );
@@ -172,6 +172,7 @@ const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount
 
     return (
         <div className='flex flex-col gap-4 mt-5'>
+            <DynamicInfo stateName={stateName} stateTotalData={stateTotalData} type="Total" />
             <div className='flex flex-col gap-2'>
                 <h2 className="xl:text-[40px] leading-tight text-gray-900 subpixel-antialiased font-semibold">{formattedStateName} Total Population Data</h2>
                 <Suspense fallback={<Spinner />}>
@@ -179,7 +180,10 @@ const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount
                 </Suspense>
             </div>
 
-            
+            <DynamicInfo stateName={stateName} stateUrbanData={stateUrbanData} type="Urban" totalPopulation={stateTotalData.totalPopulationPersons}/>
+
+            <DynamicInfo stateName={stateName} stateRuralData={stateRuralData} type="Rural" totalPopulation={stateTotalData.totalPopulationPersons}/>
+
             <div>
                 <h2 className='text-base xl:text-2xl mb-1 font-semibold'>{stateName} District List</h2>
                 <StateRelatedDistrictData districts={districts} title={`${districts.length > 0 ? stateName : 'Not Available'} District List`} />
