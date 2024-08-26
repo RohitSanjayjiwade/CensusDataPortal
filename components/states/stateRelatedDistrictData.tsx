@@ -1,4 +1,4 @@
-import { District_TABLE_HEADER } from '@/constants/menu'
+import { DISTRICT_TABLE_HEADER } from '@/constants/menu'
 import React, { memo } from 'react'
 import { DataTable } from '../table'
 import { TableCell, TableRow } from '../ui/table'
@@ -30,7 +30,7 @@ type Props = {
 
 const StateRelatedDistrictData = ({ districts, title }: Props) => {
   return (
-    <DataTable headers={District_TABLE_HEADER} title={title}>
+    <DataTable headers={DISTRICT_TABLE_HEADER} title={title}>
       {districts ? (
         districts.map((district, index) => (
             <TableRow key={district.id} className='text-base max-sm:text-xs'>

@@ -1,4 +1,4 @@
-import { State_TABLE_HEADER } from '@/constants/menu'
+import { STATE_TABLE_HEADER } from '@/constants/menu'
 import React, { memo } from 'react'
 import { DataTable } from '../table'
 import { TableCell, TableRow } from '../ui/table'
@@ -30,7 +30,7 @@ type Props = {
 
 const AllStatesData = ({ states }: Props) => {
   return (
-    <DataTable headers={State_TABLE_HEADER} title={'A list of States.'}>
+    <DataTable headers={STATE_TABLE_HEADER} title={'A list of States.'}>
       {states ? (
         states.map((state, index) => (
             <TableRow key={state.id} className='text-base max-sm:text-xs'>

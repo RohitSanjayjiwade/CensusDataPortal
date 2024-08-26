@@ -58,7 +58,7 @@ const TotalInfo = ({ stateName, stateTotalData }: Props) => {
             <p className="text-gray-800 text-base/6 mt-0">
                 As per the latest census data, {formattedStateName} has a population of {formatPopulationInCrores(stateTotalData?.totalPopulationPersons)}.
                 The total population of {formattedStateName} is {formatNumber(totalPopulationPersons)}, with males numbering {formatNumber(totalPopulationMales)} and females {formatNumber(totalPopulationFemales)}.
-                {formattedStateName} accounts for {populationPercentage}% of India&apos;s population in 2011.
+                &nbsp;{formattedStateName} accounts for {formatPercentage(populationPercentage)} of India&apos;s population in 2011.
                 {/* As per details from Census 2011, {formattedStateName} has a population of {stateTotalData?.totalPopulationPersons} Crores, an increase from 16.62 Crore in 2001. The total population of {formattedStateName} as per the latest census data is 199,812,341, with males numbering 104,480,510 and females 95,331,831. In 2001, the population was 166,197,921, with 87,565,369 males and 78,632,552 females. The total population growth in this decade was 20.23%, compared to 25.80% in the previous decade. {formattedStateName} accounts for 16.50% of India's population in 2011, up from 16.16% in 2001. */}
             </p>
 

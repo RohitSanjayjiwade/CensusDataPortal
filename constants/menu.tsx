@@ -59,11 +59,11 @@ export const NAV_BAR_MENU: NAV_BAR_MENU_PROPS[] = [
   { label: "States", path: "/states" },
   { label: "Districts", path: "/districts" },
   { label: "Cities", path: "/cities" },
-  { label: "Towns", path: "/towns" }
+  { label: "Villages", path: "/villages" }
 ];
 
 
-export const State_TABLE_HEADER = [
+export const STATE_TABLE_HEADER = [
   '#',
   'State',
   'Population (Total)',
@@ -71,7 +71,7 @@ export const State_TABLE_HEADER = [
   'Population (Urban)',
 ]
 
-export const District_TABLE_HEADER = [
+export const DISTRICT_TABLE_HEADER = [
   '#',
   'District',
   'Population (Total)',
