@@ -1,18 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link"
 import { CITY_LIST } from "@/constants/data/cities";
+import NotFound from "@/app/not-found";
+import { getCityWithVillagesBySlug } from "@/actions/city";
+import CityRelatedVillages from "@/components/cities/cityRelatedVillages";
 
-
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { PaginationDemo } from "@/components/pagination";
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
@@ -37,16 +29,20 @@ async function getVillagesByCitiesSlug(slug: string) {
     }
 }
 
-export default async function CitiesDetails({ params, searchParams }: SearchParamsProps) {
-    const city = await getVillagesByCitiesSlug(params.citieSlug);
+export default async function CityDetails({ params, searchParams }: SearchParamsProps) {
+
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
-    const itemsPerPage = 2; // Define how many items you want per page
+    const itemsPerPage = 10; // Define how many items you want per page
 
+    const city = await getCityWithVillagesBySlug(params.citieSlug, currentPage, itemsPerPage);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedStates = city && 'villages' in city ? city?.villages?.slice(startIndex, startIndex + itemsPerPage) : [];
-    const pageCount = city?.villages ? Math.ceil(city?.villages?.length / itemsPerPage) : 0;
+    if (!city) NotFound();
+
+    const paginatedVillages = city && city.villages ? city?.villages : [];
+
+    const cityName = city?.cityName || ''
+    const pageCount = city?.pageCount || 1
 
     return (
         <div className="mt-5 w-full">
@@ -58,37 +54,15 @@ export default async function CitiesDetails({ params, searchParams }: SearchPara
                 listClasses='hover:underline mx-2 font-bold'
                 capitalizeLinks
             />
-            <p><Link href="/states">Back</Link></p>
 
-            <Table>
-                <TableCaption>{city && 'villages' in city ? city?.cityName : 'City Name Not Available'} Town List</TableCaption>
-                <TableHeader>
-                    <TableRow className='bg-blue-600 text-base max-sm:text-xs hover:bg-blue-800'>
-                        <TableHead className='text-white font-bold p-2.5'>#</TableHead>
-                        <TableHead className='text-white font-bold p-2.5 w-4/12'>Town</TableHead>
-                        <TableHead className='text-white font-bold p-2.5'>Population (Total)</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {paginatedStates ? paginatedStates.map((town: any, index: number) => (
-
-                        <TableRow key={town.id} className='text-base max-sm:text-xs'>
-                            <TableCell className="font-medium p-2.5">{index + 1}</TableCell>
-                            <TableCell className='p-2.5'><Link href={`/towns/${town.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{town.name}</Link></TableCell>
-                            <TableCell className='p-2.5'>{town.population_total}</TableCell>
-
-                        </TableRow>
-                    )) : (
-                        <TableRow>
-                            <TableCell colSpan={5} className="text-center">
-                                No data available
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-
-            <PaginationDemo pageCount={pageCount} />
+            <CityRelatedVillages
+                villages={paginatedVillages}
+                cityTotalData={city?.cityData}
+                cityName={cityName}
+                pageCount={pageCount}
+                cityRuralData={city?.cityRuralData}
+                cityUrbanData={city?.cityUrbanData}
+            />
 
         </div>
 

@@ -79,6 +79,23 @@ export const DISTRICT_TABLE_HEADER = [
   'Population (Urban)',
 ]
 
+export const CITY_TABLE_HEADER = [
+  '#',
+  'City',
+  'Population (Total)',
+  'Population (Rural)',
+  'Population (Urban)',
+]
+
+
+export const VILLAGE_TABLE_HEADER = [
+  '#',
+  'Village',
+  'State Name',
+  'District Name',
+  'Population (Total)',
+]
+
 
 
 type TABS_MENU_PROPS = {

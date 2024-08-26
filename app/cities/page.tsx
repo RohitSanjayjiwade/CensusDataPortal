@@ -1,16 +1,9 @@
 import Link from 'next/link'
 import { CITY_LIST } from "@/constants/data/cities";
+import NotFound from '../not-found';
+import { onGetAllCities } from '@/actions/city';
+import AllCities from '@/components/cities';
 
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table"
-import { PaginationDemo } from '@/components/pagination';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
 import StaticInfo from '@/components/cities/StaticInfo';
 
@@ -22,22 +15,22 @@ interface SearchParamsProps {
 }
 
 
-export default async function Cities({ searchParams, }: Readonly<SearchParamsProps>) {
+export default async function CityList({ searchParams, }: Readonly<SearchParamsProps>) {
 	const query = searchParams?.query ?? "";
 	const currentPage = Number(searchParams?.page) || 1;
 	const itemsPerPage = 10; // Define how many items you want per page
 
-	if (CITY_LIST.length === 0) {
-		return <h1 className="text-red">Not Found</h1>;
-	}
+	const cities = await onGetAllCities(currentPage, itemsPerPage);
 
-	const startIndex = (currentPage - 1) * itemsPerPage;
-	const paginatedStates = CITY_LIST.slice(startIndex, startIndex + itemsPerPage);
-	const pageCount = Math.ceil(CITY_LIST.length / itemsPerPage);
+	if(!cities) NotFound();
+
+	const paginatedCities = cities && cities.cities ? cities?.cities : [];
+
+	const pageCount = cities?.pageCount || 1
 
 	return (
-		<div className='flex-1'>
-			<div className="flex flex-col gap-2 mt-32 overflow-hidden">
+		<div className='flex-1 overflow-hidden'>
+			<div className="flex flex-col gap-2 mt-32">
 				<NextBreadcrumb
 					homeElement={'Home'}
 					separator={<span> | </span>}
@@ -48,33 +41,11 @@ export default async function Cities({ searchParams, }: Readonly<SearchParamsPro
 				/>
 				{/* Static Information Section */}
 				<StaticInfo />
-				{/* <h2 className='text-base xl:text-2xl font-semibold'>Cities Census Table</h2> */}
-				<Table>
-					<TableCaption>A list of Cities.</TableCaption>
-					<TableHeader>
-						<TableRow className='bg-blue-600 text-base max-sm:text-xs hover:bg-blue-800'>
-							<TableHead className='text-white font-bold p-2.5'>#</TableHead>
-							<TableHead className='text-white font-bold p-2.5 w-4/12'>City</TableHead>
-							<TableHead className='text-white font-bold p-2.5'>Population (Total)</TableHead>
-							<TableHead className='text-white font-bold p-2.5'>Population (Rural)</TableHead>
-							<TableHead className='text-white font-bold p-2.5'>Population (Urban)</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{paginatedStates.map((city, index) => (
-							<TableRow key={city.id} className='text-base max-sm:text-xs'>
-								<TableCell className="font-medium p-2.5">{index + 1}</TableCell>
-								<TableCell className='p-2.5'><Link href={`/cities/${city.slug}`} className='underline decoration-blue-500 text-blue-700 text-base'>{city.name}</Link></TableCell>
-								<TableCell className='p-2.5'>{city.population_total}</TableCell>
-								<TableCell className='p-2.5'>{city.population_rural}</TableCell>
-								<TableCell className='p-2.5'>{city.population_urban}</TableCell>
 
-							</TableRow>
-						))}
-
-					</TableBody>
-				</Table>
-				<PaginationDemo pageCount={pageCount} />
+				{/* AllDistricts Table */}
+				<h2 className='text-base xl:text-2xl font-semibold'>Cities Census Table</h2>
+				<AllCities cities={paginatedCities} pageCount={pageCount} />
+				
 			</div>
 		</div>
 	);
