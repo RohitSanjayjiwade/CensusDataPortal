@@ -44,7 +44,7 @@ export default async function VillageList({ searchParams, }: SearchParamsProps) 
 
 				{/* AllVillages Table */}
 				<h2 className='text-base xl:text-2xl font-semibold'>Village Census Table</h2>
-				<AllVillages villages={paginatedVillages} pageCount={pageCount} />
+				<AllVillages villages={paginatedVillages} pageCount={pageCount}/>
 
 			</div>
 		</div>

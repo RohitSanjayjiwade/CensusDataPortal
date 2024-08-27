@@ -1,10 +1,11 @@
 'use client'
-import { useStates } from '@/hooks/states/use-state'
-import React, { Suspense, lazy, useState } from 'react';
+import { useStates} from '@/hooks/states/use-state'
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { PaginationDemo } from "@/components/pagination";
 import { Loader } from '../loader';
 import AllVillagesData from '@/components/villages/allVillagesData';
 const LazyAllVilages = lazy(() => import('@/components/villages/allVillagesData'));
+import SearchBar from '../serach';
 
 
 type Props = {
@@ -37,10 +38,13 @@ const AllVillages = ({ villages, pageCount }: Props) => {
     //     state.name.toLowerCase().includes(query.toLowerCase())
     //   );
 
+    const [searchQuery, setSearchQuery] = useState('');
+
+
     return (
         <>
-
-            <AllVillagesData villages={villages} />
+            <SearchBar onSearch={setSearchQuery} />
+            <AllVillagesData villages={villages} searchQuery={searchQuery} />
             <PaginationDemo pageCount={pageCount} />
         </>
     );
