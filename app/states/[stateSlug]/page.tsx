@@ -24,10 +24,10 @@ interface SearchParamsProps {
 export async function generateMetadata({ params }: SearchParamsProps) {
 	const stateName = await onGetStateName(params.stateSlug);
 	return {
-	  title: `${stateName} Details - Population and Districts`,
-	  description: `Explore detailed information about ${stateName}, including population data and district information.`,
+		title: `${stateName} Details - Population and Districts`,
+		description: `Explore detailed information about ${stateName}, including population data and district information.`,
 	};
-  }
+}
 
 export const revalidate = 60; // ISR revalidation
 
@@ -50,7 +50,7 @@ export default async function StateDetails({ params, searchParams }: SearchParam
 
 	return (
 		<div className='flex-1 overflow-hidden'>
-			<div className="flex flex-col gap-2 mt-5">
+			<div className="flex flex-col gap-2 mt-32">
 				<NextBreadcrumb
 					homeElement={'Home'}
 					separator={<span> | </span>}

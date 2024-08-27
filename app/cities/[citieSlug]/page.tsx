@@ -45,25 +45,27 @@ export default async function CityDetails({ params, searchParams }: SearchParams
     const pageCount = city?.pageCount || 1
 
     return (
-        <div className="mt-5 w-full">
-            <NextBreadcrumb
-                homeElement={'Home'}
-                separator={<span> | </span>}
-                activeClasses='text-amber-500'
-                containerClasses='flex py-2 bg-gradient-to-r from-purple-600 to-blue-600'
-                listClasses='hover:underline mx-2 font-bold'
-                capitalizeLinks
-            />
+        <div className='flex-1 overflow-hidden'>
+            <div className="flex flex-col gap-2 mt-32">
+                <NextBreadcrumb
+                    homeElement={'Home'}
+                    separator={<span> | </span>}
+                    activeClasses='text-amber-500'
+                    containerClasses='flex py-2 bg-gradient-to-r from-purple-600 to-blue-600'
+                    listClasses='hover:underline mx-2 font-bold'
+                    capitalizeLinks
+                />
 
-            <CityRelatedVillages
-                villages={paginatedVillages}
-                cityTotalData={city?.cityData}
-                cityName={cityName}
-                pageCount={pageCount}
-                cityRuralData={city?.cityRuralData}
-                cityUrbanData={city?.cityUrbanData}
-            />
+                <CityRelatedVillages
+                    villages={paginatedVillages}
+                    cityTotalData={city?.cityData}
+                    cityName={cityName}
+                    pageCount={pageCount}
+                    cityRuralData={city?.cityRuralData}
+                    cityUrbanData={city?.cityUrbanData}
+                />
 
+            </div>
         </div>
 
     );
