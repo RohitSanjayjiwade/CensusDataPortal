@@ -88,11 +88,17 @@ export const CITY_TABLE_HEADER = [
 ]
 
 
+export const VILLAGE_IN_CITY_TABLE_HEADER = [
+  '#',
+  'Village',
+  'Population (Total)',
+]
+
 export const VILLAGE_TABLE_HEADER = [
   '#',
   'Village',
-  'State Name',
   'District Name',
+  'State Name',
   'Population (Total)',
 ]
 

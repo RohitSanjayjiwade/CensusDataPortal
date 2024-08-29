@@ -112,3 +112,61 @@ export const getVillageInfoBySlug = async (slug: string) => {
         throw new Error('Failed to fetch village Information');
     }
 }
+
+
+
+export const getVillageByQuery = async (query: string) => {
+    try {
+        // Query to get the total number of villages for pagination
+        // const totalVillagesCount = await client.village.count();
+
+        // Query to get the villages with pagination
+        const villages = await client.village.findMany({
+            where: {
+                name: {
+                    contains: query,
+                    mode: 'insensitive', // Case-insensitive search
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                slug: true,
+                state: {
+                    select: {
+                        name: true,
+                        slug: true,
+                    }
+                },
+                district: {
+                    select: {
+                        name: true,
+                        slug: true,
+                    }
+                },
+                years: {
+                    where: {
+                        year: 2011
+                    },
+                    select: {
+                        year: true,
+                        rural_data: {
+                            select: {
+                                totalPopulationPersons: true,
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        if (villages) {
+            // const pageCount = Math.ceil(totalVillagesCount / itemsPerPage);
+            return villages
+                // pageCount: pageCount
+            
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

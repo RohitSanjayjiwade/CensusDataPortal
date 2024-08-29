@@ -1,5 +1,5 @@
 'use client'
-import { useStates} from '@/hooks/states/use-state'
+import { useStates } from '@/hooks/states/use-state'
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { PaginationDemo } from "@/components/pagination";
 import { Loader } from '../loader';
@@ -38,13 +38,32 @@ const AllVillages = ({ villages, pageCount }: Props) => {
     //     state.name.toLowerCase().includes(query.toLowerCase())
     //   );
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredVillages, setFilteredVillages] = useState<{
+        id: number;
+        slug: string;
+        name: string;
+        district: {
+            slug: string;
+            name: string;
+        };
+        state: {
+            slug: string;
+            name: string;
+        };
+        years: {
+            rural_data: {
+                totalPopulationPersons: number | null;
+            } | null;
+            year: number;
+        }[];
+    }[]>([]);
 
+    const [loading, setLoading] = useState(false);
 
     return (
         <>
-            <SearchBar onSearch={setSearchQuery} />
-            <AllVillagesData villages={villages} searchQuery={searchQuery} />
+            <SearchBar onLoading={setLoading} onSearchResults={setFilteredVillages} />
+            <AllVillagesData villages={villages} loading={loading} filteredVillages={filteredVillages} />
             <PaginationDemo pageCount={pageCount} />
         </>
     );
