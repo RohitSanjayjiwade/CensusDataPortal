@@ -22,7 +22,7 @@ export default async function StateList({ searchParams, }: Readonly<SearchParams
 
 	const query = searchParams?.query ?? "";
 	const currentPage = Number(searchParams?.page) || 1;
-	const itemsPerPage = 2; // Define how many items you want per page
+	const itemsPerPage = 30; // Define how many items you want per page
 
 	const states = await onGetAllStates(currentPage, itemsPerPage);
 

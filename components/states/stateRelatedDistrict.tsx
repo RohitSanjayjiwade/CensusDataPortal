@@ -1,6 +1,6 @@
 'use client'
 import { useStatesInfo } from '@/hooks/states/use-state'
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { PaginationDemo } from "@/components/pagination";
 import { Loader } from '../loader';
 import StateRelatedDistrictData from "@/components/states/stateRelatedDistrictData";
@@ -8,6 +8,7 @@ import DynamicInfo from "@/components/states/dynamicInfo";
 import NotFound from '@/app/not-found';
 import TabsSection from './tabsSection';
 import { Spinner } from '../spinner';
+import axios from 'axios';
 
 
 const LazyTabsSection = lazy(() => import('./tabsSection'));
@@ -131,24 +132,7 @@ const LazyAllDistictsUnderState = lazy(() => import('@/components/states/stateRe
 
 
 type Props = {
-    districts: {
-        id: number;
-        name: string;
-        slug: string;
-        years: {
-            data: {
-                totalPopulationPersons: number | null;
-            } | null;
-            year: number;
-            rural_data: {
-                totalPopulationPersons: number | null;
-            } | null;
-            urban_data: {
-                totalPopulationPersons: number | null;
-            } | null;
-        }[];
-    }[],
-    pageCount: number,
+    // currentPage: number,
 
     stateTotalData: any | null,
 
@@ -157,16 +141,24 @@ type Props = {
     stateUrbanData: any | null,
 
     stateName: string
+
+    itemsPerPage: number
+
+    slug: string
 }
 
-const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount, stateRuralData, stateUrbanData }: Props) => {
+const StateRelatedDistricts = ({ stateTotalData, stateName, stateRuralData, stateUrbanData, slug }: Props) => {
     // const filteredStates = states.filter((state) =>
     //     state.name.toLowerCase().includes(query.toLowerCase())
     //   );
 
-    if (!stateTotalData || !districts.length) {
+    if (!stateTotalData) {
         return <NotFound />;
     }
+
+    const [currentPage, setCurrenPage] = useState(1)
+
+    const { districts, loading, pageCount } = useStatesInfo(slug, currentPage)
 
     const formattedStateName = stateName.charAt(0).toUpperCase() + stateName.slice(1).toLowerCase();
 
@@ -180,14 +172,14 @@ const StateRelatedDistricts = ({ districts, stateTotalData, stateName, pageCount
                 </Suspense>
             </div>
 
-            <DynamicInfo stateName={stateName} stateUrbanData={stateUrbanData} type="Urban" totalPopulation={stateTotalData.totalPopulationPersons}/>
+            <DynamicInfo stateName={stateName} stateUrbanData={stateUrbanData} type="Urban" totalPopulation={stateTotalData.totalPopulationPersons} />
 
-            <DynamicInfo stateName={stateName} stateRuralData={stateRuralData} type="Rural" totalPopulation={stateTotalData.totalPopulationPersons}/>
+            <DynamicInfo stateName={stateName} stateRuralData={stateRuralData} type="Rural" totalPopulation={stateTotalData.totalPopulationPersons} />
 
             <div>
                 <h2 className='text-base xl:text-2xl mb-1 font-semibold'>{stateName} District List</h2>
-                <StateRelatedDistrictData districts={districts} title={`${districts.length > 0 ? stateName : 'Not Available'} District List`} />
-                <PaginationDemo pageCount={pageCount} />
+                <StateRelatedDistrictData districts={districts} loading={loading} title={`${districts.length > 0 ? stateName : 'Not Available'} District List`} />
+                <PaginationDemo pageCount={pageCount} setPage={setCurrenPage} currentPage={currentPage} />
             </div>
 
             {/* <div className='flex flex-col gap-2'>

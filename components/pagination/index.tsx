@@ -156,6 +156,8 @@ import { cn } from "@/lib/utils";
 
 interface PaginationProps {
   pageCount: number;
+  setPage(page: number): void;
+  currentPage: number
 }
 
 interface PaginationArrowProps {
@@ -185,15 +187,15 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
   );
 };
 
-export function PaginationDemo({ pageCount }: Readonly<PaginationProps>) {
+export function PaginationDemo({ pageCount, setPage, currentPage }: Readonly<PaginationProps>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
+  // const currentPage = Number(searchParams.get("page")) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
+    return `${pathname}`;
   };
 
    const renderPaginationLinks = () => {
@@ -202,23 +204,22 @@ export function PaginationDemo({ pageCount }: Readonly<PaginationProps>) {
     // Add first 3 pages
     for (let i = 1; i <= 3; i++) {
       links.push(
-        <PaginationItem key={i}>
-          <PaginationLink
-            href={createPageURL(i)}
-            className={currentPage === i ? "text-white bg-violet-500" : ""}
+        <div key={i}>
+          <div
+            onClick={()=>setPage(i)}
+            className={currentPage === i ? "text-white py-2 px-4 bg-violet-500  rounded-lg cursor-pointer" : "cursor-pointer py-2 px-4 hover:bg-red-200"}
           >
             {i}
-          </PaginationLink>
-        </PaginationItem>
+          </div>
+        </div>
       );
     }
 
     // Add ellipsis if there are pages between the first 3 and the last 3
     if (pageCount > 6) {
       links.push(
-        <PaginationItem key="ellipsis">
+        
           <PaginationEllipsis />
-        </PaginationItem>
       );
     }
 
@@ -226,14 +227,15 @@ export function PaginationDemo({ pageCount }: Readonly<PaginationProps>) {
     for (let i = pageCount - 2; i <= pageCount; i++) {
       if (i > 3) {
         links.push(
-          <PaginationItem key={i}>
-            <PaginationLink
-              href={createPageURL(i)}
-              className={currentPage === i ? "text-white bg-violet-500" : ""}
+          <div key={i}>
+            <div
+              
+              onClick={()=>setPage(i)}
+              className={currentPage === i ? "text-white py-2 px-4 bg-violet-500  rounded-lg cursor-pointer" : "cursor-pointer py-2 px-4 hover:bg-red-200"}
             >
               {i}
-            </PaginationLink>
-          </PaginationItem>
+            </div>
+          </div>
         );
       }
     }
@@ -242,28 +244,15 @@ export function PaginationDemo({ pageCount }: Readonly<PaginationProps>) {
   };
 
   return (
-    <div>
-      <Pagination>
-        <PaginationContent className="rounded-lg bg-gray-200 mt-3">
-          <PaginationItem>
-            {/*<PaginationArrow
-              direction="left"
-              href={createPageURL(currentPage - 1)}
-              isDisabled={currentPage <= 1}
-            />*/}
-           <PaginationPrevious href={createPageURL(currentPage - 1)} className={cn(currentPage == 1 ? "hidden" : "")} />
-          </PaginationItem>
+        <div className="rounded-lg bg-gray-200  w-min flex justify-center mx-auto mt-3 items-center">
+          <div>
+           <button onClick={()=>setPage(currentPage - 1)} className={cn(currentPage == 1 ? "hidden" : "hover:bg-red-200 py-2 px-4 rounded-lg")}>&lt;&nbsp;Previous</button>
+          </div>
           {renderPaginationLinks()}
-          <PaginationItem>
-            {/*<PaginationArrow
-              direction="right"
-              href={createPageURL(currentPage + 1)}
-              isDisabled={currentPage >= pageCount}
-            />*/}
-          <PaginationNext href={createPageURL(currentPage + 1)} className={currentPage >= pageCount ? "hidden" : ""} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+          <div>
+          <button onClick={()=>setPage(currentPage + 1)} className={currentPage >= pageCount ? "hidden" : "hover:bg-red-200 py-2 px-4 rounded-lg"}>Next&nbsp;&gt;</button>
+          </div>
+        </div>
+   
   );
 }

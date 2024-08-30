@@ -41,7 +41,7 @@ const AllStates = ({states, pageCount}: Props) => {
         <>
 
             <AllStatesData states={states} />
-            <PaginationDemo pageCount={pageCount} />
+            {/* <PaginationDemo pageCount={pageCount} /> */}
         </>
     );
 };

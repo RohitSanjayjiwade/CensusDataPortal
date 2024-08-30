@@ -2,8 +2,6 @@
 import { client } from '@/lib/prisma'
 
 
-
-
 export const onGetStateName = async(slug: string) => {
   try{
     const stateName = await client.state.findUnique({
@@ -77,9 +75,45 @@ export const onGetAllStates = async (page: number, itemsPerPage: number) => {
 }
 
 
+export const onGetStateInfoByStateSlug = async (slug: string) => {
+  try {
+    const states = await client.state.findUnique({
+      where: {
+        slug: slug
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        years: {
+          where: {
+            year: 2011
+          },
+          select: {
+            year: true,
+            data: true,
+            rural_data: true,
+            urban_data: true,
+          },
+        },
+      },
+    })
 
+    if (states) {
+      return {
+        stateName: states.name,
+        stateData: states.years[0].data,
+        stateRuralData: states.years[0].rural_data,
+        stateUrbanData: states.years[0].urban_data,
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching state Information:', error);
+    throw new Error('Failed to fetch state Information');
+  }
+}
 
-export const onGetStateWithDistricts = async (slug: string, page: number, itemsPerPage: number) => {
+export const GetDistrictsByStateSlug = async (slug: string, page: number, itemsPerPage: number) => {
   try {
     const states = await client.state.findUnique({
       where: {
@@ -127,33 +161,21 @@ export const onGetStateWithDistricts = async (slug: string, page: number, itemsP
             },
           },
         },
-        years: {
-          where: {
-            year: 2011
-          },
-          select: {
-            year: true,
-            data: true,
-            rural_data: true,
-            urban_data: true,
-          },
-        },
       },
     })
 
     if (states) {
       const pageCount = Math.ceil(states._count.districts / itemsPerPage);
+      console.log("itemsPerPage", itemsPerPage)
+      console.log("states.districts", states.districts)
       return {
         stateName: states.name,
-        stateData: states.years[0].data,
-        stateRuralData: states.years[0].rural_data,
-        stateUrbanData: states.years[0].urban_data,
         districts: states.districts,
         pageCount: pageCount
       }
     }
   } catch (error) {
-    console.error('Error fetching state and districts:', error);
-    throw new Error('Failed to fetch state and districts');
+    console.error('Error fetching state related districts:', error);
+    throw new Error('Failed to fetch sstate related districts');
   }
 }

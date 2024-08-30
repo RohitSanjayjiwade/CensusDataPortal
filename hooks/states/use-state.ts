@@ -1,6 +1,6 @@
 import {
     onGetAllStates,
-    onGetStateWithDistricts,
+    GetDistrictsByStateSlug,
 
 } from '@/actions/state'
 import { useEffect, useRef, useState } from 'react'
@@ -80,13 +80,11 @@ export const useStates = (searchParams?: {
 
 
 
-export const useStatesInfo = (slug: string, searchParams?: {
-    page?: string;
-    query?: string;
-}) => {
+export const useStatesInfo = (slug: string, page: number
+) => {
 
-    const query = searchParams?.query ?? "";
-    const currentPage = Number(searchParams?.page) || 1;
+    // const query = searchParams?.query ?? "";
+    const currentPage = page;
     const itemsPerPage = 2; // Define how many items you want per page
 
     // Use useEffect to fetch data when currentPage changes
@@ -125,16 +123,15 @@ export const useStatesInfo = (slug: string, searchParams?: {
         setLoading(true)
         try {
 
-            const state = await onGetStateWithDistricts(slug, currentPage, itemsPerPage);
+            const state = await GetDistrictsByStateSlug(slug, currentPage, itemsPerPage);
 
-            const startIndex = (currentPage - 1) * itemsPerPage;
+            // const startIndex = (currentPage - 1) * itemsPerPage;
             const paginatedStates = state && state.districts ? state?.districts: [];
             // const pageCount = state && state.districts ? Math.ceil(state.districts.length / itemsPerPage) : 0;
             if (state) {
                 console.log("state",state)
                 setDistricts(paginatedStates)
                 setStateName(state.stateName)
-                setstateTotalData(state.stateData)
                 setPageCount(state.pageCount)
             }
             setLoading(false);
@@ -158,6 +155,5 @@ export const useStatesInfo = (slug: string, searchParams?: {
         loading,
         stateName,
         pageCount,
-        stateTotalData,
     }
 }

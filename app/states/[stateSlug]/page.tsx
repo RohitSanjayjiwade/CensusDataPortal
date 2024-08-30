@@ -3,7 +3,7 @@ import Link from "next/link"
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 import StateRelatedDistricts from "@/components/states/stateRelatedDistrict";
 import {
-	onGetStateWithDistricts,
+	onGetStateInfoByStateSlug,
 	onGetStateName,
 
 } from '@/actions/state'
@@ -38,15 +38,11 @@ export default async function StateDetails({ params, searchParams }: SearchParam
 	const currentPage = Number(searchParams?.page) || 1;
 	const itemsPerPage = 2; // Define how many items you want per page
 
-	const state = await onGetStateWithDistricts(params.stateSlug, currentPage, itemsPerPage);
+	const state = await onGetStateInfoByStateSlug(params.stateSlug);
 
 	if (!state) NotFound();
 
-	const paginatedDistricts = state && state.districts ? state?.districts : [];
-
 	const stateName = state?.stateName || ''
-	const pageCount = state?.pageCount || 1
-
 
 	return (
 		<div className='flex-1 overflow-hidden'>
@@ -62,12 +58,13 @@ export default async function StateDetails({ params, searchParams }: SearchParam
 
 
 				<StateRelatedDistricts
-					districts={paginatedDistricts}
 					stateTotalData={state?.stateData}
 					stateName={stateName}
-					pageCount={pageCount}
 					stateRuralData={state?.stateRuralData}
 					stateUrbanData={state?.stateUrbanData}
+					// currentPage = {currentPage}
+					itemsPerPage = {itemsPerPage}
+					slug={params.stateSlug}
 				/>
 
 
