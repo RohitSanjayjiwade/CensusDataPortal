@@ -2,6 +2,7 @@
 import { useStatesInfo } from '@/hooks/states/use-state'
 import React, { Suspense, lazy } from 'react';
 import { PaginationDemo } from "@/components/pagination";
+import { PaginationFirst } from '../pagination/paginationFirst';
 import { Loader } from '../loader';
 import DistrictRelatedCityData from "@/components/districts/districtRelatedCityData";
 import DynamicInfo from "@/components/states/dynamicInfo";
@@ -189,7 +190,7 @@ const CityRelatedVillages = ({ villages, cityTotalData, cityName, pageCount, cit
             <div>
                 <h2 className='text-base xl:text-2xl mb-1 font-semibold'>{cityName} Villages List</h2>
                 <CityRelatedVillageData villages={villages} title={`${villages.length > 0 ? cityName : 'Not Available'} Villages List`} />
-                <PaginationDemo pageCount={pageCount} />
+                <PaginationFirst pageCount={pageCount} />
             </div>
 
             {/* <div className='flex flex-col gap-2'>

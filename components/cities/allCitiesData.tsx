@@ -30,7 +30,7 @@ type Props = {
 
 const AllCitiesData = ({ cities }: Props) => {
     return (
-        <DataTable headers={CITY_TABLE_HEADER} title={'A list of Cities.'}>
+        <DataTable headers={CITY_TABLE_HEADER} title={`${cities.length > 0 ? 'A' : 'Not Available'} list of Cities.`}>
             {cities ? (
                 cities.map((city, index) => (
                     <TableRow key={city.id} className='text-base max-sm:text-xs'>

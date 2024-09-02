@@ -1,4 +1,4 @@
-import { VILLAGE_TABLE_HEADER } from '@/constants/menu'
+import { VILLAGE_IN_CITY_TABLE_HEADER } from '@/constants/menu'
 import React, { memo } from 'react'
 import { DataTable } from '../table'
 import { TableCell, TableRow } from '../ui/table'
@@ -24,7 +24,7 @@ type Props = {
 
 const CityRelatedVillageData = ({ villages, title }: Props) => {
   return (
-    <DataTable headers={VILLAGE_TABLE_HEADER} title={title}>
+    <DataTable headers={VILLAGE_IN_CITY_TABLE_HEADER} title={title}>
       {villages ? (
         villages.map((village, index) => (
             <TableRow key={village.id} className='text-base max-sm:text-xs'>

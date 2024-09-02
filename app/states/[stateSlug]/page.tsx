@@ -62,8 +62,6 @@ export default async function StateDetails({ params, searchParams }: SearchParam
 					stateName={stateName}
 					stateRuralData={state?.stateRuralData}
 					stateUrbanData={state?.stateUrbanData}
-					// currentPage = {currentPage}
-					itemsPerPage = {itemsPerPage}
 					slug={params.stateSlug}
 				/>
 

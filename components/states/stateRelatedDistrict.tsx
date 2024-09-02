@@ -142,8 +142,6 @@ type Props = {
 
     stateName: string
 
-    itemsPerPage: number
-
     slug: string
 }
 
@@ -156,7 +154,7 @@ const StateRelatedDistricts = ({ stateTotalData, stateName, stateRuralData, stat
         return <NotFound />;
     }
 
-    const [currentPage, setCurrenPage] = useState(1)
+    const [currentPage, setCurrenPage] = useState<number>(1)
 
     const { districts, loading, pageCount } = useStatesInfo(slug, currentPage)
 

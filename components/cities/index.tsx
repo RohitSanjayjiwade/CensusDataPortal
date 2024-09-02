@@ -2,6 +2,7 @@
 import { useStates } from '@/hooks/states/use-state'
 import React, { Suspense, lazy, useState } from 'react';
 import { PaginationDemo } from "@/components/pagination";
+import { PaginationFirst } from '../pagination/paginationFirst';
 import { Loader } from '../loader';
 import AllCitiesData from '@/components/cities/allCitiesData';
 const LazyAllCities = lazy(() => import('@/components/cities/allCitiesData'));
@@ -39,7 +40,7 @@ const AllCities = ({cities, pageCount}: Props) => {
         <>
 
             <AllCitiesData cities={cities} />
-            <PaginationDemo pageCount={pageCount} />
+            <PaginationFirst pageCount={pageCount} />
         </>
     );
 };

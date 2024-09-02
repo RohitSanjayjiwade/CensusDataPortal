@@ -30,7 +30,7 @@ type Props = {
 
 const AllDistrictsData = ({ districts }: Props) => {
     return (
-        <DataTable headers={DISTRICT_TABLE_HEADER} title={'A list of Districts.'}>
+        <DataTable headers={DISTRICT_TABLE_HEADER} title={`${districts.length > 0 ? 'A' : 'Not Available'} list of Districts.`}>
             {districts ? (
                 districts.map((district, index) => (
                     <TableRow key={district.id} className='text-base max-sm:text-xs'>

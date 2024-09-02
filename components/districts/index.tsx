@@ -2,6 +2,7 @@
 import { useStates } from '@/hooks/states/use-state'
 import React, { Suspense, lazy, useState } from 'react';
 import { PaginationDemo } from "@/components/pagination";
+import { PaginationFirst } from '../pagination/paginationFirst';
 import { Loader } from '../loader';
 import AllDistrictsData from '@/components/districts/allDistrictsData';
 const LazyAllDistricts = lazy(() => import('@/components/districts/allDistrictsData'));
@@ -39,7 +40,7 @@ const AllDistricts = ({districts, pageCount}: Props) => {
         <>
 
             <AllDistrictsData districts={districts} />
-            <PaginationDemo pageCount={pageCount} />
+            <PaginationFirst pageCount={pageCount} />
         </>
     );
 };

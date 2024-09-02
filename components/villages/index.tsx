@@ -2,6 +2,7 @@
 import { useStates } from '@/hooks/states/use-state'
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { PaginationDemo } from "@/components/pagination";
+import { PaginationFirst } from '../pagination/paginationFirst';
 import { Loader } from '../loader';
 import AllVillagesData from '@/components/villages/allVillagesData';
 const LazyAllVilages = lazy(() => import('@/components/villages/allVillagesData'));
@@ -64,7 +65,7 @@ const AllVillages = ({ villages, pageCount }: Props) => {
         <>
             <SearchBar onLoading={setLoading} onSearchResults={setFilteredVillages} />
             <AllVillagesData villages={villages} loading={loading} filteredVillages={filteredVillages} />
-            <PaginationDemo pageCount={pageCount} />
+            <PaginationFirst pageCount={pageCount} />
         </>
     );
 };

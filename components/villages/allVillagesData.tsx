@@ -76,7 +76,7 @@ const AllVillagesData = ({ villages, filteredVillages, loading }: Props) => {
                 </DataTable>)}
             </Loader>
 
-            <DataTable headers={VILLAGE_TABLE_HEADER} title={'A list of Villages.'}>
+            <DataTable headers={VILLAGE_TABLE_HEADER} title={`${villages.length > 0 ? 'A' : 'Not Available'} list of Villages.`}>
                 {villages ? (
                     villages.map((village, index) => (
                         <TableRow key={village.id} className='text-base max-sm:text-xs'>
