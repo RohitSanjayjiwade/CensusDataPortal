@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link"
 import { District_List } from "@/constants/data/districts";
-import { getDistrictWithCitiesBySlug } from "@/actions/district";
+import { getDistrictWithCitiesBySlug, onGetDistrictName } from "@/actions/district";
 import DistrictRelatedCities from "@/components/districts/districtRelatedCities";
 import NotFound from "@/app/not-found";
-
+import { Metadata } from 'next';
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
@@ -15,6 +15,30 @@ interface SearchParamsProps {
         page?: string;
         query?: string;
     };
+}
+
+// Function to generate metadata for SEO
+export async function generateMetadata({ params }: SearchParamsProps): Promise<Metadata> {
+	// Initialize default metadata values
+	let title = 'Census2011';
+	let description =
+		`Explore detailed information about District, including population data and city information.`;
+
+	const districtName = await onGetDistrictName(params.districtSlug);
+	if (districtName) {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title: `${districtName} Details - Population | Sex Ratio & Literacy Rate and Cities` || title,
+			description: `Explore detailed information about ${districtName}, including population data and city information.` || description,
+		};
+	}
+	else {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title,
+			description
+		};
+	}
 }
 
 

@@ -2,9 +2,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link"
 import { CITY_LIST } from "@/constants/data/cities";
 import NotFound from "@/app/not-found";
-import { getCityWithVillagesBySlug } from "@/actions/city";
+import { getCityWithVillagesBySlug, onGetCityName } from "@/actions/city";
 import CityRelatedVillages from "@/components/cities/cityRelatedVillages";
-
+import { Metadata } from 'next';
 import NextBreadcrumb from "@/components/NextBreadcrumb";
 
 interface SearchParamsProps {
@@ -18,15 +18,28 @@ interface SearchParamsProps {
 }
 
 
-async function getVillagesByCitiesSlug(slug: string) {
-    const city = await CITY_LIST.find((city) => city.slug === slug);
+// Function to generate metadata for SEO
+export async function generateMetadata({ params }: SearchParamsProps): Promise<Metadata> {
+	// Initialize default metadata values
+	let title = 'Census2011';
+	let description =
+		`Explore detailed information about City, including population data and village information.`;
 
-    if (city) {
-        return { cityName: city?.name, villages: city?.villages };
-    } else {
-        console.error('State not found');
-        return undefined;
-    }
+	const cityName = await onGetCityName(params.citieSlug);
+	if (cityName) {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title: `${cityName} Details - Population | Sex Ratio & Literacy Rate and Villages` || title,
+			description: `Explore detailed information about ${cityName}, including population data and village information.` || description,
+		};
+	}
+	else {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title,
+			description
+		};
+	}
 }
 
 export default async function CityDetails({ params, searchParams }: SearchParamsProps) {

@@ -4,9 +4,10 @@ import NextBreadcrumb from "@/components/NextBreadcrumb";
 import VillageRelatedInfo from "@/components/villages/villageRelatedInfo";
 import {
 	getVillageInfoBySlug,
-
+	onGetVillageName,
 } from '@/actions/village'
 import NotFound from "@/app/not-found";
+import { Metadata } from 'next';
 
 
 interface SearchParamsProps {
@@ -19,14 +20,29 @@ interface SearchParamsProps {
 	};
 }
 
-// // Function to generate metadata for SEO
-// export async function generateMetadata({ params }: SearchParamsProps) {
-// 	const stateName = await onGetStateName(params.stateSlug);
-// 	return {
-// 	  title: `${stateName} Details - Population and Districts`,
-// 	  description: `Explore detailed information about ${stateName}, including population data and district information.`,
-// 	};
-//   }
+// Function to generate metadata for SEO
+export async function generateMetadata({ params }: SearchParamsProps): Promise<Metadata> {
+	// Initialize default metadata values
+	let title = 'Census2011';
+	let description =
+		`Explore detailed information about Village, including population data and village information.`;
+
+	const villageName = await onGetVillageName(params.villageSlug);
+	if (villageName) {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title: `${villageName} Details - Population | Sex Ratio & Literacy Rate and ${villageName} - All Data` || title,
+			description: `Explore detailed information about ${villageName}, including population data.` || description,
+		};
+	}
+	else {
+		return {
+			metadataBase: new URL('https://census2011'),
+			title,
+			description
+		};
+	}
+}
 
 // export const revalidate = 60; // ISR revalidation
 

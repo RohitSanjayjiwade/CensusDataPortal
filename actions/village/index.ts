@@ -4,26 +4,26 @@ import { client } from '@/lib/prisma'
 
 
 
-// export const onGetStateName = async(slug: string) => {
-//   try{
-//     const stateName = await client.state.findUnique({
-//       where: {
-//         slug: slug,
-//       },
-//       select:{
-//         name: true
-//       }
-//     })
+export const onGetVillageName = async(slug: string) => {
+  try{
+    const villageName = await client.village.findUnique({
+      where: {
+        slug: slug,
+      },
+      select:{
+        name: true
+      }
+    })
 
-//     if(stateName)
-//     {
-//       return stateName.name
-//     }
+    if(villageName)
+    {
+      return villageName.name
+    }
 
-//   }catch(error){
-//     console.log(error)
-//   }
-// }
+  }catch(error){
+    console.log(error)
+  }
+}
 
 
 export const onGetAllVillages = async (page: number, itemsPerPage: number) => {
