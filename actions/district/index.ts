@@ -157,3 +157,91 @@ export const getDistrictWithCitiesBySlug = async (slug: string, page: number, it
     throw new Error('Failed to fetch district and cities');
   }
 }
+
+
+
+export const populatedDistricts = async () => {
+  try {
+      // Fetch districts with the year 2011 and urban data
+      const districts = await client.district.findMany({
+          select: {
+              id: true,
+              name: true,
+              slug: true,
+              years: {
+                  where: {
+                      year: 2011,
+                  },
+                  select: {
+                      year: true,
+                      urban_data: {
+                          select: {
+                              totalPopulationPersons: true,
+                          }
+                      }
+                  }
+              }
+          }
+      });
+
+      // Sort districts by urban population in descending order
+      const sortedDistricts = districts
+          .map(city => ({
+              ...city,
+              totalPopulationPersons: city.years[0]?.urban_data?.totalPopulationPersons || 0
+          }))
+          .sort((a, b) => b.totalPopulationPersons - a.totalPopulationPersons)
+          .slice(0, 5); // Take the top 5 districts
+
+      return sortedDistricts;
+
+  } catch (error) {
+      console.error('Error fetching populated Districts:', error);
+      throw new Error('Failed to fetch populated Districts');
+  }
+};
+
+
+// const topMetropolitanAreas = async () => {
+//   try {
+//     // Fetch all sub-districts with their urban data
+//     const subDistricts = await prisma.subDistrict.findMany({
+//       include: {
+//         urban_data: {
+//           select: {
+//             totalPopulationPersons: true
+//           }
+//         }
+//       }
+//     });
+
+//     // Fetch all districts with their urban data
+//     const districts = await prisma.district.findMany({
+//       include: {
+//         urban_data: {
+//           select: {
+//             totalPopulationPersons: true
+//           }
+//         }
+//       }
+//     });
+
+//     // Aggregate and sort sub-districts and districts by their total urban population
+//     const metropolitanAreas = [
+//       ...subDistricts.map(subDistrict => ({
+//         name: subDistrict.name,
+//         totalUrbanPopulation: subDistrict.urban_data?.totalPopulationPersons || 0
+//       })),
+//       ...districts.map(district => ({
+//         name: district.name,
+//         totalUrbanPopulation: district.urban_data?.totalPopulationPersons || 0
+//       }))
+//     ].sort((a, b) => b.totalUrbanPopulation - a.totalUrbanPopulation);
+
+//     // Return top 5 metropolitan areas
+//     return metropolitanAreas.slice(0, 5);
+//   } catch (error) {
+//     console.error('Error fetching top metropolitan areas:', error);
+//     throw new Error('Failed to fetch top metropolitan areas');
+//   }
+// };
